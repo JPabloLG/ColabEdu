@@ -65,7 +65,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                co.uniquindio.estructuras.colabedu/co.uniquindio.estructuras.colabedu.Application
+                                co.uniquindio.estructuras.colabedu/co.uniquindio.estructuras.colabedu.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

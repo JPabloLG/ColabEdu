@@ -1,7 +1,10 @@
 package co.uniquindio.estructuras.colabedu.Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.uniquindio.estructuras.colabedu.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -22,8 +25,8 @@ public class LogInController {
     private TextField txt_username;
 
     @FXML
-    void btn_createAccount(MouseEvent event) {
-
+    void btn_createAccount(MouseEvent event) throws IOException {
+        App.setRoot("RegisterView", "ColabEdu -Resgitro de Usuario-");
     }
 
     @FXML
