@@ -1,8 +1,5 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
-public class User {
-
-
-
-
+public class Moderator extends User{
+    
 }
