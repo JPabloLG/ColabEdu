@@ -1,2 +1,4 @@
-package co.uniquindio.estructuras.colabedu.Modelo;public class User {
+package co.uniquindio.estructuras.colabedu.Modelo;
+
+public class User {
 }
