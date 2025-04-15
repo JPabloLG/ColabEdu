@@ -1,4 +1,4 @@
-package co.uniquindio.estructuras.colabedu.Modelo;
+package co.uniquindio.estructuras.colabedu.Model;
 
 /**
  * Generic implementation of a singly linked list.

@@ -1,4 +1,4 @@
-package co.uniquindio.estructuras.colabedu.Modelo;
+package co.uniquindio.estructuras.colabedu.Model;
     /**
      * A generic priority queue implemented using a sorted linked list.
      * Elements are ordered based on their natural ordering (must implement Comparable).
