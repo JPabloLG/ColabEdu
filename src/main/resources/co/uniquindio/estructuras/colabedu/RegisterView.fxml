@@ -5,6 +5,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.estructuras.colabedu.Controller.RegisterController">
     <children>
@@ -21,5 +23,10 @@
       <TextField fx:id="txt_email" layoutX="141.0" layoutY="294.0" prefHeight="35.0" prefWidth="546.0" promptText="Email adress" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
       <TextField fx:id="txt_password" layoutX="141.0" layoutY="374.0" prefHeight="35.0" prefWidth="241.0" promptText="Password" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
       <TextField fx:id="txt_confirmPassword" layoutX="443.0" layoutY="374.0" prefHeight="35.0" prefWidth="241.0" promptText="Confirm password" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
+      <Text fill="#283c4d" layoutX="25.0" layoutY="63.0" onMousePressed="#btn_back" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="50.208984375">
+         <font>
+            <Font name="Bernard MT Condensed" size="51.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

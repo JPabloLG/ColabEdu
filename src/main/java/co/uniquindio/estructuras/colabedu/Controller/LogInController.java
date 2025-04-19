@@ -26,12 +26,12 @@ public class LogInController {
 
     @FXML
     void btn_createAccount(MouseEvent event) throws IOException {
-        App.setRoot("RegisterView", "ColabEdu -Resgitro de Usuario-");
+        App.setRoot("RegisterView", "ColabEdu -Registro de Usuario-");
     }
 
     @FXML
-    void btn_logIn(MouseEvent event) {
-
+    void btn_logIn(MouseEvent event) throws IOException {
+        App.setRoot("PrincipalView", "ColabEdu -Página principal-");
     }
 
     @FXML
