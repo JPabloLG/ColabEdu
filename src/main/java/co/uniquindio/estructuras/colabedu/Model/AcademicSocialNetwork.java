@@ -11,4 +11,5 @@ public class AcademicSocialNetwork {
     }
 
     //falta el constructor con sus respectivas lista propias
+
 }
