@@ -5,6 +5,8 @@ module co.uniquindio.estructuras.colabedu {
 
     requires org.kordamp.bootstrapfx.core;
 
+    requires org.kordamp.bootstrapfx.core;
+
     opens co.uniquindio.estructuras.colabedu to javafx.fxml;
     exports co.uniquindio.estructuras.colabedu;
 
