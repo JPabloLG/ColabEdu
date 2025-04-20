@@ -5,13 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.uniquindio.estructuras.colabedu.App;
-<<<<<<< HEAD
-import co.uniquindio.estructuras.colabedu.DTO.ModeratorDTO;
-import co.uniquindio.estructuras.colabedu.Model.Moderator;
-import co.uniquindio.estructuras.colabedu.Model.User;
 import co.uniquindio.estructuras.colabedu.Util.EmailService;
-=======
->>>>>>> 524ad9fae622212e6b406b37167177d3bc3e4777
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -53,7 +48,6 @@ public class RegisterController {
     }
 
     @FXML
-<<<<<<< HEAD
     void btn_signIn(MouseEvent event) throws IOException {
         String email = txt_email.getText();
         String name = txt_name.getText();
@@ -62,11 +56,6 @@ public class RegisterController {
         String confirmPassword = txt_confirmPassword.getText();
 
         emailService.enviarCorreo(email, username); //prueba de correo
-=======
-    void btn_signIn(MouseEvent event) {
->>>>>>> 524ad9fae622212e6b406b37167177d3bc3e4777
-
-        App.setRoot("LogInView", "ColabEdu -Inicia sesión-");
     }
 
     @FXML
