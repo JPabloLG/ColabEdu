@@ -1,9 +1,6 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
-import co.uniquindio.estructuras.colabedu.Model.Interfaces.Report;
-import co.uniquindio.estructuras.colabedu.Model.Interfaces.UserManagement;
-
-public class Moderator extends User implements UserManagement, Report {
+public class Moderator extends User implements UserManagement, Report{
 
     public Moderator(String name, String email, String id, String password) {
         super(name, email, id, password);

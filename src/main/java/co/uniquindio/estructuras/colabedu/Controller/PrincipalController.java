@@ -1,10 +1,15 @@
 package co.uniquindio.estructuras.colabedu.Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class PrincipalController {
 
@@ -19,42 +24,64 @@ public class PrincipalController {
 
     @FXML
     void btn_colabEdu(MouseEvent event) {
-        System.out.println("Boton ColabEdu");
+
     }
 
     @FXML
     void btn_contenidos(MouseEvent event) {
-        System.out.println("Boton contenidos");
+
+    }
+
+    @FXML
+    void btn_crear(MouseEvent event) {
+        try {
+            // Cargar el FXML de la pestaña/ventana de subir contenido
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/LoadContentView.fxml"));
+            Parent root = fxmlLoader.load();
+
+            // Crear nuevo Stage (ventana)
+            Stage stage = new Stage();
+            stage.setTitle("ColabEdu -Crea contenido-");
+            stage.setScene(new Scene(root));
+
+            // Opcional: bloquear la principal hasta cerrar esta
+            // stage.initModality(Modality.WINDOW_MODAL);
+            // stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+            stage.show(); // Mostrar la ventana sin cerrar la principal
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void btn_grupos(MouseEvent event) {
-        System.out.println("Boton grupos");
+
     }
 
     @FXML
     void btn_perfil(MouseEvent event) {
-        System.out.println("Boton perfil");
+
     }
 
     @FXML
     void btn_principal(MouseEvent event) {
-        System.out.println("Boton principal");
-    }
 
-    @FXML
-    void btn_valoraciones(MouseEvent event) {
-        System.out.println("Boton valoraciones");
     }
 
     @FXML
     void btn_soliAyuda(MouseEvent event) {
-        System.out.println("Boton solicitar ayuda");
+
     }
 
     @FXML
     void btn_solicitudesAyuda(MouseEvent event) {
-        System.out.println("Boton solicitudes de ayuda");
+
+    }
+
+    @FXML
+    void btn_valoraciones(MouseEvent event) {
+
     }
 
     @FXML

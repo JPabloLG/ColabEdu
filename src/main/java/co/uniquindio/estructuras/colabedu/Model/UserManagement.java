@@ -1,6 +1,4 @@
-package co.uniquindio.estructuras.colabedu.Model.Interfaces;
-
-import co.uniquindio.estructuras.colabedu.Model.User;
+package co.uniquindio.estructuras.colabedu.Model;
 
 public interface UserManagement {
 

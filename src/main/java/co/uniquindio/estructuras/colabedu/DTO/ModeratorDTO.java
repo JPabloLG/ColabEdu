@@ -1,18 +1,19 @@
 package co.uniquindio.estructuras.colabedu.DTO;
 
-public class UserDTO {
+public class ModeratorDTO {
+
     private String name;
     private String email;
     private String id;
+    private String password;
 
-    // Constructor con todos los campos
-    public UserDTO(String name, String email, String id) {
+    public ModeratorDTO(String name, String email, String id, String password) {
         this.name = name;
         this.email = email;
         this.id = id;
+        this.password = password;
     }
 
-    // Getters y setters
     public String getName() {
         return name;
     }
@@ -37,12 +38,21 @@ public class UserDTO {
         this.id = id;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
-        return "UserDTO{" +
+        return "ModeratorDTO{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", id='" + id + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
