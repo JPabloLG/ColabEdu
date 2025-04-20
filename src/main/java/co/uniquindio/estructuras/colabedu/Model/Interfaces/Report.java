@@ -1,4 +1,4 @@
-package co.uniquindio.estructuras.colabedu.Model;
+package co.uniquindio.estructuras.colabedu.Model.Interfaces;
 
 public interface Report {
 

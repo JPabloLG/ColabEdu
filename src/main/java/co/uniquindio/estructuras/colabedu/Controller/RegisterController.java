@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.uniquindio.estructuras.colabedu.App;
+import co.uniquindio.estructuras.colabedu.DTO.UserDTO;
+import co.uniquindio.estructuras.colabedu.Model.Moderator;
+import co.uniquindio.estructuras.colabedu.Model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -24,16 +27,10 @@ public class RegisterController {
     private TextField txt_email;
 
     @FXML
-    private TextField txt_grade;
-
-    @FXML
     private TextField txt_name;
 
     @FXML
     private TextField txt_password;
-
-    @FXML
-    private TextField txt_school;
 
     @FXML
     private TextField txt_username;
@@ -45,6 +42,14 @@ public class RegisterController {
 
     @FXML
     void btn_signIn(MouseEvent event) {
+        String email = txt_email.getText();
+        String name = txt_name.getText();
+        String username = txt_username.getText();
+        String password = txt_password.getText();
+        String confirmPassword = txt_confirmPassword.getText();
+
+        UserDTO userDTO = new UserDTO(name, email, username);
+        User user = new Moderator(name, email, username, password);
 
     }
 
@@ -52,10 +57,8 @@ public class RegisterController {
     void initialize() {
         assert txt_confirmPassword != null : "fx:id=\"txt_confirmPassword\" was not injected: check your FXML file 'RegisterView.fxml'.";
         assert txt_email != null : "fx:id=\"txt_email\" was not injected: check your FXML file 'RegisterView.fxml'.";
-        assert txt_grade != null : "fx:id=\"txt_grade\" was not injected: check your FXML file 'RegisterView.fxml'.";
         assert txt_name != null : "fx:id=\"txt_name\" was not injected: check your FXML file 'RegisterView.fxml'.";
         assert txt_password != null : "fx:id=\"txt_password\" was not injected: check your FXML file 'RegisterView.fxml'.";
-        assert txt_school != null : "fx:id=\"txt_school\" was not injected: check your FXML file 'RegisterView.fxml'.";
         assert txt_username != null : "fx:id=\"txt_username\" was not injected: check your FXML file 'RegisterView.fxml'.";
 
     }
