@@ -2,16 +2,25 @@ package co.uniquindio.estructuras.colabedu.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import co.uniquindio.estructuras.colabedu.Model.Content;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PrincipalController {
+
+    public static List<Content> contenidosTemporales = new ArrayList<>();
 
     @FXML
     private ResourceBundle resources;
@@ -23,65 +32,87 @@ public class PrincipalController {
     private TextField txt_search;
 
     @FXML
-    void btn_colabEdu(MouseEvent event) {
+    private ScrollPane content_container;
 
+    @FXML private VBox contenedorContenidos;
+
+    public void refrescarContenidos() {
+        contenedorContenidos.getChildren().clear();
+        for (Content contenido : contenidosTemporales) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/contentCard.fxml"));
+                AnchorPane card = loader.load();
+                ContentCardController controller = loader.getController();
+                controller.inicializarDatos(contenido);
+                contenedorContenidos.getChildren().add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    void btn_colabEdu(MouseEvent event) {
+        System.out.println("Botón ColabEdu");
     }
 
     @FXML
     void btn_contenidos(MouseEvent event) {
-
+        System.out.println("Botón Contenidos");
     }
 
     @FXML
     void btn_crear(MouseEvent event) {
         try {
-            // Cargar el FXML de la pestaña/ventana de subir contenido
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/LoadContentView.fxml"));
-            Parent root = fxmlLoader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/LoadContentView.fxml"));
+            Parent root = loader.load();
 
-            // Crear nuevo Stage (ventana)
+            // Obtener el controlador de la ventana de carga
+            LoadContentController loadController = loader.getController();
+            loadController.setPrincipalController(this); // Pasar la referencia
+
             Stage stage = new Stage();
-            stage.setTitle("ColabEdu -Crea contenido-");
             stage.setScene(new Scene(root));
-
-            // Opcional: bloquear la principal hasta cerrar esta
-            // stage.initModality(Modality.WINDOW_MODAL);
-            // stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-
-            stage.show(); // Mostrar la ventana sin cerrar la principal
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    // Getter para la lista de contenidos
+    public List<Content> getContenidosTemporales() {
+        return contenidosTemporales;
+    }
+
     @FXML
     void btn_grupos(MouseEvent event) {
+        System.out.println("Botón Grupos");
 
     }
 
     @FXML
     void btn_perfil(MouseEvent event) {
-
+        System.out.println("Botón Perfil");
     }
 
     @FXML
     void btn_principal(MouseEvent event) {
-
+        System.out.println("Botón Principal");
     }
 
     @FXML
     void btn_soliAyuda(MouseEvent event) {
-
+        System.out.println("Botón Solicitar ayuda");
     }
 
     @FXML
     void btn_solicitudesAyuda(MouseEvent event) {
-
+        System.out.println("Botón Solicitudes ayuda");
     }
 
     @FXML
     void btn_valoraciones(MouseEvent event) {
-
+        System.out.println("Botón valoraciones");
     }
 
     @FXML

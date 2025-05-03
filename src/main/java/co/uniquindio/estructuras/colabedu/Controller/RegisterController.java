@@ -48,7 +48,7 @@ public class RegisterController {
         String password = txt_password.getText();
         String confirmPassword = txt_confirmPassword.getText();
 
-        emailService.enviarCorreo(email, username); //prueba de correo
+        //emailService.enviarCorreo(email, username); //prueba de correo
     }
 
     @FXML

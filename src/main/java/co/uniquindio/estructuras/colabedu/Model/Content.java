@@ -12,7 +12,7 @@ public class Content {
     public User theUser;
     public Rating theRating;
 
-    public Content(String name, LocalDateTime publicationDate, String typeContent, String description, String subject, User theUser, Rating theRating) {
+    public Content(String name, LocalDateTime publicationDate, String typeContent, String description, String subject, Moderator theUser, Rating theRating) {
         this.name = name;
         this.publicationDate = publicationDate;
         this.typeContent = typeContent;
