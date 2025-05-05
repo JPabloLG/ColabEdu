@@ -1,6 +1,7 @@
 module co.uniquindio.estructuras.colabedu {
     requires javafx.controls;
     requires javafx.fxml;
+    requires jakarta.mail;
 
     requires org.kordamp.bootstrapfx.core;
 
