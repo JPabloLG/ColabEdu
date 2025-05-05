@@ -4,6 +4,7 @@ module co.uniquindio.estructuras.colabedu {
     requires jakarta.mail;
 
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens co.uniquindio.estructuras.colabedu to javafx.fxml;
     exports co.uniquindio.estructuras.colabedu;
