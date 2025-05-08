@@ -1,10 +1,19 @@
 package co.uniquindio.estructuras.colabedu.Controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.sql.*;
+import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
 
 import co.uniquindio.estructuras.colabedu.App;
+import co.uniquindio.estructuras.colabedu.DAO.UserDAO;
+import co.uniquindio.estructuras.colabedu.DAO.UserDAOImpl;
+import co.uniquindio.estructuras.colabedu.DB.JDBC;
+import co.uniquindio.estructuras.colabedu.DTO.UserDTO;
 import co.uniquindio.estructuras.colabedu.Util.EmailService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -33,7 +42,12 @@ public class RegisterController {
     @FXML
     private TextField txt_username;
 
+    //Instancias de los servicios
     EmailService emailService = new EmailService();
+    //Instancia de la base de datos
+    private static final Connection connection = JDBC.getConnection();
+    UserDAOImpl userDAO = new UserDAOImpl(connection);
+
 
     @FXML
     void btn_back(MouseEvent event) throws IOException {
@@ -47,9 +61,38 @@ public class RegisterController {
         String username = txt_username.getText();
         String password = txt_password.getText();
         String confirmPassword = txt_confirmPassword.getText();
+        UserDTO user = new UserDTO(name, email, username, password);
 
-        emailService.enviarCorreo(email, username); //prueba de correo
-        App.setRoot("LogInView", "ColabEdu -Página principal-");
+        //Validar que el nombre de usuario no esté vacío
+        if (username.isEmpty()) {
+            System.out.println("El nombre de usuario no puede estar vacío.");
+            return;
+        }
+        //Validar que el nombre del usuario no esté vacío
+        if (name.isEmpty()) {
+            System.out.println("El nombre del usuario no puede estar vacío.");
+            return;
+        }
+        //Validar que el email del usuario no esté vacío
+        if (email.isEmpty()) {
+            System.out.println("El email del usuario no puede estar vacío.");
+            return;
+        }
+        //Validar que la contraseña no esté vacía
+        if (password.isEmpty()) {
+            System.out.println("La contraseña no puede estar vacía.");
+            return;
+        }
+        //Validar que la contraseña y la confirmación coincidan
+        if (!password.equals(confirmPassword)) {
+            System.out.println("Las contraseñas no coinciden.");
+            return;
+        }
+        else {
+            userDAO.save(user);
+            emailService.enviarCorreo(email, username); //prueba de correo
+            App.setRoot("LogInView", "ColabEdu -Página principal-");
+        }
     }
 
     @FXML

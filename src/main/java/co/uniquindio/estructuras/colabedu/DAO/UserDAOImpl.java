@@ -19,10 +19,13 @@ public class UserDAOImpl implements  UserDAO{
 
     @Override
     public void save(UserDTO user) {
-        String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
+        String sql = "INSERT INTO users (user_id, name, email,identifier,password  ) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getName());
-            stmt.setString(2, user.getEmail());
+            stmt.setString(1, user.getId());
+            stmt.setString(2, user.getName());
+            stmt.setString(3, user.getEmail());
+            stmt.setString(4, user.getId());
+            stmt.setString(5, user.getPassword());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
