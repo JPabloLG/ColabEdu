@@ -1,15 +1,15 @@
 package co.uniquindio.estructuras.colabedu.DTO;
 
-public class UserDTO {
+public class StudentDTO {
     private String name;
     private String email;
     private String id;
     private String password;
 
-    public UserDTO() {
+    public StudentDTO() {
     }
 
-    public UserDTO(String name, String email, String id, String password) {
+    public StudentDTO(String name, String email, String id, String password) {
         this.name = name;
         this.email = email;
         this.id = id;

@@ -1,7 +1,6 @@
 package co.uniquindio.estructuras.colabedu.DAO;
 
-import co.uniquindio.estructuras.colabedu.DTO.ModeratorDTO;
-import co.uniquindio.estructuras.colabedu.DTO.UserDTO;
+import co.uniquindio.estructuras.colabedu.DTO.StudentDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +17,7 @@ public class UserDAOImpl implements  UserDAO{
     }
 
     @Override
-    public void save(UserDTO user) {
+    public void save(StudentDTO user) {
         String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getName());
@@ -30,13 +29,13 @@ public class UserDAOImpl implements  UserDAO{
     }
 
     @Override
-    public UserDTO findById(int id) {
+    public StudentDTO findById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new UserDTO(rs.getString("name"), rs.getString("email"), rs.getString("id"), rs.getString("password"));
+                return new StudentDTO(rs.getString("name"), rs.getString("email"), rs.getString("id"), rs.getString("password"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,12 +44,12 @@ public class UserDAOImpl implements  UserDAO{
     }
 
     @Override
-    public List<UserDTO> findAll() {
+    public List<StudentDTO> findAll() {
         return List.of();
     }
 
     @Override
-    public void update(UserDTO user) {
+    public void update(StudentDTO user) {
 
     }
 

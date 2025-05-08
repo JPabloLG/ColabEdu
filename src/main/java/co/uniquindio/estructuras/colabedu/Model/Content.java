@@ -3,16 +3,22 @@ package co.uniquindio.estructuras.colabedu.Model;
 import java.time.LocalDateTime;
 
 public class Content {
-
+    // Atributos
     private String name;
     private LocalDateTime publicationDate;
     private String typeContent;
     private String description;
     private String subject;
-    public User theUser;
-    public Rating theRating;
+    private User theUser;
+    private Rating theRating;
+    private byte[] fileData;
+    private String fileName;
+    private String fileType;
 
-    public Content(String name, LocalDateTime publicationDate, String typeContent, String description, String subject, Moderator theUser, Rating theRating) {
+    // Constructor
+    public Content(String name, LocalDateTime publicationDate, String typeContent,
+                   String description, String subject, User theUser,
+                   Rating theRating, byte[] fileData, String fileName, String fileType) {
         this.name = name;
         this.publicationDate = publicationDate;
         this.typeContent = typeContent;
@@ -20,6 +26,9 @@ public class Content {
         this.subject = subject;
         this.theUser = theUser;
         this.theRating = theRating;
+        this.fileData = fileData;
+        this.fileName = fileName;
+        this.fileType = fileType;
     }
 
     public String getName() {
@@ -78,6 +87,38 @@ public class Content {
         this.theRating = theRating;
     }
 
+    public byte[] getFileData() {
+        return fileData;
+    }
+
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    // Método para obtener la extensión del archivo
+    public String getFileExtension() {
+        if (fileName == null || fileName.lastIndexOf(".") == -1) {
+            return "";
+        }
+        return fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+    }
+
     @Override
     public String toString() {
         return "Content{" +
@@ -88,6 +129,9 @@ public class Content {
                 ", subject='" + subject + '\'' +
                 ", theUser=" + theUser +
                 ", theRating=" + theRating +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", fileDataSize=" + (fileData != null ? fileData.length + " bytes" : "null") +
                 '}';
     }
 }
