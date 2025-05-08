@@ -1,5 +1,6 @@
 package co.uniquindio.estructuras.colabedu.Controller;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ResourceBundle;
 import co.uniquindio.estructuras.colabedu.Model.Content;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -36,18 +38,30 @@ public class PrincipalController {
 
     @FXML private VBox contenedorContenidos;
 
+    @FXML
     public void refrescarContenidos() {
         contenedorContenidos.getChildren().clear();
-        for (Content contenido : contenidosTemporales) {
-            try {
+
+        try {
+            for (Content contenido : contenidosTemporales) {
+                // Cargar la tarjeta de contenido
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/contentCard.fxml"));
                 AnchorPane card = loader.load();
-                ContentCardController controller = loader.getController();
-                controller.inicializarDatos(contenido);
+
+                // Configurar el controlador de la tarjeta
+                ContentCardController cardController = loader.getController();
+                cardController.inicializarDatos(contenido);
+
+                // Añadir estilos y márgenes
+                card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);");
+                VBox.setMargin(card, new Insets(0, 0, 15, 0));
+
+                // Añadir al contenedor
                 contenedorContenidos.getChildren().add(card);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al cargar las tarjetas de contenido: " + e.getMessage());
         }
     }
 

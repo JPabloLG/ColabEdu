@@ -1,7 +1,5 @@
 package co.uniquindio.estructuras.colabedu.DAO;
 
-import co.uniquindio.estructuras.colabedu.DTO.UserDTO;
-
 import java.util.List;
 
 public interface ContentDAO {
