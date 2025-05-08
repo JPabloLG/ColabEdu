@@ -6,6 +6,21 @@ public class Moderator extends User implements UserManagement, Report{
         super(name, email, id, password);
     }
 
+    @Override
+    public void updateContent(Content content) {
+
+    }
+
+    @Override
+    public void deleteContent(Content content) {
+
+    }
+
+    @Override
+    public void publishContent(Content content) {
+
+    }
+
 
     @Override
     public void generateTopRatedContests() {

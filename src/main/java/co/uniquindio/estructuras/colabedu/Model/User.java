@@ -6,6 +6,7 @@ public abstract class User {
     protected String id;
     private String password;
 
+
     public String getName() {
         return name;
     }
@@ -57,4 +58,8 @@ public abstract class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    public abstract void updateContent(Content content);
+    public abstract void deleteContent(Content content);
+    public abstract void publishContent(Content content);
 }
