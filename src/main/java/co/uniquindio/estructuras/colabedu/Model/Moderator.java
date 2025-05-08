@@ -7,17 +7,17 @@ public class Moderator extends User implements UserManagement, Report{
     }
 
     @Override
-    public void updateContent() {
+    public void updateContent(Content content) {
 
     }
 
     @Override
-    public void deleteContent() {
+    public void deleteContent(Content content) {
 
     }
 
     @Override
-    public void publishContent() {
+    public void publishContent(Content content) {
 
     }
 

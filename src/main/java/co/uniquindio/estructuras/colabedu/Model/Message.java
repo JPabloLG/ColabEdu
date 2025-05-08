@@ -1,23 +1,30 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
+import java.time.LocalDateTime;
+
 public class Message {
 
-    private String title;
     private String contentMessage;
     private User user;
 
-    public Message(String title, String contentMessage, User user) {
-        this.title = title;
+    private LocalDateTime publicationDate;
+
+    public Message(LocalDateTime publicationDate, String contentMessage, User user) {
+        this.publicationDate = publicationDate;
         this.contentMessage = contentMessage;
         this.user = user;
     }
 
-    public String getTitle() {
-        return title;
+    public Message(String contentMessage, LocalDateTime publicationDate) {
+        this.contentMessage = contentMessage;
+        this.publicationDate = publicationDate;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
+    }
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public String getContentMessage() {

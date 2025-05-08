@@ -59,7 +59,7 @@ public abstract class User {
                 '}';
     }
 
-    public abstract void updateContent();
-    public abstract void deleteContent();
-    public abstract void publishContent();
+    public abstract void updateContent(Content content);
+    public abstract void deleteContent(Content content);
+    public abstract void publishContent(Content content);
 }
