@@ -1,6 +1,7 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Content {
     // Atributos
@@ -18,17 +19,17 @@ public class Content {
     // Constructor
     public Content(String name, LocalDateTime publicationDate, String typeContent,
                    String description, String subject, User theUser,
-                   Rating theRating, byte[] fileData, String fileName, String fileType) {
+                   ArrayList<> theRating, byte[] fileData, String fileName, String fileType){
         this.name = name;
         this.publicationDate = publicationDate;
         this.typeContent = typeContent;
         this.description = description;
         this.subject = subject;
         this.theUser = theUser;
-        this.theRating = theRating;
         this.fileData = fileData;
         this.fileName = fileName;
         this.fileType = fileType;
+        this.theRating = new ArrayList<>();
     }
 
     public String getName() {
@@ -79,11 +80,11 @@ public class Content {
         this.theUser = theUser;
     }
 
-    public Rating getTheRating() {
+    public ArrayList<Rating> getTheRating() {
         return theRating;
     }
 
-    public void setTheRating(Rating theRating) {
+    public void setTheRating(ArrayList<Rating> theRating) {
         this.theRating = theRating;
     }
 
