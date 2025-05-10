@@ -17,7 +17,7 @@ public class UserDAOImpl implements  UserDAO{
     }
 
     @Override
-    public void save(UserDTO user) {
+    public void save(StudentDTO user) {
         String sql = "INSERT INTO users (user_id, name, email,identifier,password  ) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getId());

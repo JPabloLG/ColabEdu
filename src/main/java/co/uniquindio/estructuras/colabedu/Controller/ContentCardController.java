@@ -33,7 +33,7 @@ public class ContentCardController {
         txt_nameContent.setText(contenido.getName());
         txt_typeContent.setText(contenido.getTypeContent());
         txt_description.setText(contenido.getDescription());
-        txt_star.setText(String.valueOf(contenido.getTheRating().getRating()));
+        txt_star.setText(String.valueOf(contenido.getTheRating()));
 
         // Configurar representación visual del contenido
         configurarVisualizacionContenido(contenido);

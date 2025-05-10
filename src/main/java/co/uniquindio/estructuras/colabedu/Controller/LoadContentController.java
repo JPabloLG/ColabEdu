@@ -129,7 +129,7 @@ public class LoadContentController {
                 "password123"
         );
 
-        Rating rating = new Rating(0);
+        Rating rating = new Rating();
 
         return new Content(
                 title,

@@ -50,6 +50,11 @@ public class Student extends User{
 
     @Override
     public void updateContent(Content content) {
+
+    }
+
+    /*@Override
+    public void updateContent(Content content) {
         for (Content i:contentBinarySearchTree) {
             if(i.equals(content)){
                 i.setName(content.getName());
@@ -59,8 +64,7 @@ public class Student extends User{
             }
 
         }
-
-    }
+    }*/
 
     @Override
     public void deleteContent(Content content) {
@@ -72,14 +76,15 @@ public class Student extends User{
         contentBinarySearchTree.add(content);
     }
 
+    /*
     public void createContent(String name, LocalDateTime publicationDate, String typeContent,
                               String description, String subject, Rating theRating){
-        Content content = new Content(name,publicationDate, typeContent, description, subject, this, theRating);
+        //Content content = new Content(name,publicationDate, typeContent, description, subject, this, theRating);
         contentBinarySearchTree.add(content);
     }
 
     public void requestHelp(){}
-    public List<Content> searchContent(String keyword) {
+    //public List<Content> searchContent(String keyword) {
         return contentBinarySearchTree.search(keyword);
     }
 
@@ -108,6 +113,6 @@ public class Student extends User{
     public void sendMessage (Student recipient, String messageContent){
         Message message = new Message( messageContent, LocalDateTime.now());
         recipient.messageLinkedList.add(message);
-    }
+    }*/
 
 }

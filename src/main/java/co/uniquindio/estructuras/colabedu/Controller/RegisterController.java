@@ -13,7 +13,7 @@ import co.uniquindio.estructuras.colabedu.App;
 import co.uniquindio.estructuras.colabedu.DAO.UserDAO;
 import co.uniquindio.estructuras.colabedu.DAO.UserDAOImpl;
 import co.uniquindio.estructuras.colabedu.DB.JDBC;
-import co.uniquindio.estructuras.colabedu.DTO.UserDTO;
+import co.uniquindio.estructuras.colabedu.DTO.StudentDTO;
 import co.uniquindio.estructuras.colabedu.Util.EmailService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -61,7 +61,7 @@ public class RegisterController {
         String username = txt_username.getText();
         String password = txt_password.getText();
         String confirmPassword = txt_confirmPassword.getText();
-        UserDTO user = new UserDTO(name, email, username, password);
+        StudentDTO user = new StudentDTO(name, email, username, password);
 
         //Validar que el nombre de usuario no esté vacío
         if (username.isEmpty()) {
