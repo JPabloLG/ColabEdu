@@ -4,7 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -17,20 +17,20 @@
             </font>
         </Text>
 
-        <Text fx:id="txt_nameContent" layoutX="148.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dsads" textAlignment="CENTER" wrappingWidth="205.0">
+        <Text fx:id="txt_nameContent" layoutX="126.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dsads" textAlignment="CENTER" wrappingWidth="205.0">
             <font>
                 <Font name="Berlin Sans FB" size="14.0" />
             </font>
         </Text>
 
-        <!-- Contenedor multimedia -->
-        <VBox fx:id="mediaContainer" alignment="CENTER_LEFT" layoutX="373.0" layoutY="-8.0" prefHeight="177.0" prefWidth="176.0" spacing="5">
+        <!-- Contenedor multimedia mejorado -->
+        <StackPane fx:id="mediaContainer" layoutX="333.0" layoutY="21.0" prefHeight="137.0" prefWidth="152.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-radius: 5;">
             <children>
-                <ImageView fx:id="imgPreview" fitHeight="150" fitWidth="150" preserveRatio="true" visible="false" />
+                <ImageView fx:id="imgPreview" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" visible="false" />
                 <ImageView fx:id="iconType" fitHeight="50" fitWidth="50" visible="false" />
                 <Label fx:id="lblFileInfo" visible="false" wrapText="true" />
             </children>
-        </VBox>
+        </StackPane>
 
         <!-- Descripción -->
         <Label fx:id="txt_description" layoutX="18.0" layoutY="53.0" prefHeight="87.0" prefWidth="285.0" text="Descripción" textAlignment="JUSTIFY" wrapText="true">
@@ -52,13 +52,13 @@
             </image>
         </ImageView>
 
-              <Text fx:id="txt_typeContent" layoutX="222.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo" textAlignment="RIGHT" wrappingWidth="187.3203125">
+        <Text fx:id="txt_typeContent" layoutX="222.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo" textAlignment="RIGHT" wrappingWidth="187.3203125">
             <font>
                 <Font name="Berlin Sans FB" size="14.0" />
             </font>
         </Text>
 
-              <Text fx:id="txt_date" layoutX="429.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00-00-0000" textAlignment="RIGHT">
+        <Text fx:id="txt_date" layoutX="429.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00-00-0000" textAlignment="RIGHT">
             <font>
                 <Font name="Berlin Sans FB Bold" size="11.0" />
             </font>

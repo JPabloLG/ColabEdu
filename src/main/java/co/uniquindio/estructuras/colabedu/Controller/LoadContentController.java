@@ -14,12 +14,11 @@ import javafx.stage.Stage;
 
 public class LoadContentController {
 
-    // Componentes FXML - Asegúrate que los nombres coincidan EXACTAMENTE
     @FXML private TextField txt_title;
     @FXML private TextField txt_topic;
     @FXML private TextField txt_typeContent;
-    @FXML private TextArea txt_description;  // Cambiado de TextField a TextArea
-    @FXML private Label lbl_fileName;        // Asegúrate que existe en el FXML
+    @FXML private TextArea txt_description;
+    @FXML private Label lbl_fileName;
 
     private PrincipalController principalController;
     private File selectedFile;
@@ -39,7 +38,6 @@ public class LoadContentController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar archivo");
 
-        // Configurar filtros
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Todos los archivos", "*.*"),
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif"),
@@ -54,7 +52,6 @@ public class LoadContentController {
         if (selectedFile != null) {
             lbl_fileName.setText("Archivo seleccionado: " + selectedFile.getName());
 
-            // Auto-detectar tipo de contenido si está vacío
             if (txt_typeContent.getText().isEmpty()) {
                 String fileName = selectedFile.getName().toLowerCase();
                 if (fileName.matches(".*\\.(png|jpg|jpeg|gif)$")) {
@@ -72,7 +69,6 @@ public class LoadContentController {
 
     @FXML
     void btn_loadContent() {
-        // Validaciones básicas reforzadas
         if (txt_title == null || txt_title.getText().isEmpty()) {
             showAlert("Error", "El título es obligatorio");
             return;
@@ -84,7 +80,6 @@ public class LoadContentController {
         }
 
         try {
-            // Leer archivo con verificación
             if (!selectedFile.canRead()) {
                 showAlert("Error", "No se puede leer el archivo seleccionado");
                 return;
@@ -93,13 +88,11 @@ public class LoadContentController {
             byte[] fileData = Files.readAllBytes(selectedFile.toPath());
             String fileType = Files.probeContentType(selectedFile.toPath());
 
-            // Valores por defecto seguros
             String title = txt_title.getText();
             String type = txt_typeContent.getText() != null ? txt_typeContent.getText() : "Sin tipo";
             String description = txt_description.getText() != null ? txt_description.getText() : "";
             String topic = txt_topic.getText() != null ? txt_topic.getText() : "General";
 
-            // Crear contenido de manera segura
             Content nuevoContenido = createContent(
                     title,
                     type,
@@ -110,13 +103,11 @@ public class LoadContentController {
                     fileType
             );
 
-            // Añadir a la lista principal
             if (principalController != null) {
                 principalController.getContenidosTemporales().add(nuevoContenido);
-                principalController.refrescarContenidos(); // Esta línea es crítica
+                principalController.refrescarContenidos();
             }
 
-            // Cerrar ventana
             Stage stage = (Stage) lbl_fileName.getScene().getWindow();
             stage.close();
 
@@ -131,7 +122,6 @@ public class LoadContentController {
     private Content createContent(String title, String type, String description,
                                   String topic, byte[] fileData, String fileName,
                                   String fileType) {
-        // Usuario temporal - reemplaza con tu lógica real
         User author = new Moderator(
                 "defaultUser",
                 "user@example.com",
@@ -139,7 +129,6 @@ public class LoadContentController {
                 "password123"
         );
 
-        // Rating inicial
         Rating rating = new Rating(0);
 
         return new Content(

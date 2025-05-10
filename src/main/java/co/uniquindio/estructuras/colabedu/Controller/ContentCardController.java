@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import co.uniquindio.estructuras.colabedu.Model.Content;
 
@@ -20,8 +20,8 @@ public class ContentCardController {
     @FXML private Text txt_nameContent;
     @FXML private Label txt_description;
 
-    // Componentes multimedia alternativos
-    @FXML private VBox mediaContainer;
+    // Componentes multimedia
+    @FXML private StackPane mediaContainer;  // Cambiado de VBox a StackPane
     @FXML private ImageView imgPreview;
     @FXML private Label lblFileInfo;
     @FXML private ImageView iconType;
@@ -62,12 +62,24 @@ public class ContentCardController {
     private void mostrarImagen(Content contenido) {
         try {
             Image image = new Image(new ByteArrayInputStream(contenido.getFileData()));
+
+            // Configurar el ImageView
             imgPreview.setImage(image);
-            imgPreview.setVisible(true);
+            imgPreview.setPreserveRatio(true);
+            imgPreview.setSmooth(true);
+            imgPreview.setCache(true);
+
+            // Tamaño fijo para todas las imágenes
             imgPreview.setFitWidth(150);
             imgPreview.setFitHeight(150);
-            imgPreview.setPreserveRatio(true);
+
+            // Centrar la imagen
+            imgPreview.setTranslateX((150 - imgPreview.getFitWidth()) / 2);
+            imgPreview.setTranslateY((150 - imgPreview.getFitHeight()) / 2);
+
             mediaContainer.getChildren().add(imgPreview);
+            imgPreview.setVisible(true);
+
         } catch (Exception e) {
             mostrarIconoTipoArchivo(contenido);
         }
