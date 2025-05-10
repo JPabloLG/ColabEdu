@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.*?>
 
+<AnchorPane prefHeight="400" prefWidth="600" style="-fx-background-color: #DDEAF6;"
+            xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="co.uniquindio.estructuras.colabedu.Controller.LogInController">
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.estructuras.colabedu.Controller.LogInController">
-    <children>
-        <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/bg_LogIn.png" />
-            </image>
-        </ImageView>
-        <TextField fx:id="txt_username" layoutX="271.0" layoutY="247.0" prefHeight="35.0" prefWidth="241.0" promptText="Username" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
-        <PasswordField fx:id="txt_password" layoutX="271.0" layoutY="313.0" prefHeight="35.0" prefWidth="241.0" promptText="Password" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
-        <Text layoutX="432.0" layoutY="380.0" onMousePressed="#btn_createAccount" strokeType="OUTSIDE" strokeWidth="0.0" text="Create account" wrappingWidth="79.482421875" />
-        <Button layoutX="356.0" layoutY="403.0" mnemonicParsing="false" onMousePressed="#btn_logIn" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Log In" textFill="WHITE" />
-    </children>
+    <!-- Título ColabEdu -->
+    <Label layoutX="200" layoutY="40"
+           style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #0A0A23;"
+           text="ColabEdu" />
+
+    <!-- Contenedor central -->
+    <VBox alignment="CENTER" layoutX="150" layoutY="120" prefWidth="300" spacing="15"
+          style="-fx-background-color: white;
+                 -fx-border-color: #0A0A23;
+                 -fx-border-width: 1.5;
+                 -fx-border-radius: 15;
+                 -fx-background-radius: 15;
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 3);">
+
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <!-- Campo de usuario con ícono -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <ImageView fitHeight="20" fitWidth="20" image="@images/user.png" />
+            <TextField fx:id="usernameField" promptText="Username"
+                       style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+        </HBox>
+
+        <!-- Campo de contraseña con ícono -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <ImageView fitHeight="20" fitWidth="20" image="@images/lock.png" />
+            <PasswordField fx:id="passwordField" promptText="Password"
+                           style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+        </HBox>
+
+        <!-- Botón de login -->
+        <Button text="Log In" onAction="#btn_logIn" prefWidth="100"
+                style="-fx-background-color: #0A0A23; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+
+        <Label text="¿No tienes cuenta?" />
+        <Button text="Crear cuenta" onAction="#btn_createAccount"
+                style="-fx-background-color: Black; -fx-background-radius: 10; -fx-font-weight: Bold;" textFill="WHITE" />
+    </VBox>
 </AnchorPane>
