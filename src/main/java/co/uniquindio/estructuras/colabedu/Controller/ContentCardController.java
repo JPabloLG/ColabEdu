@@ -12,16 +12,13 @@ import co.uniquindio.estructuras.colabedu.Model.Content;
 
 public class ContentCardController {
 
-    // Componentes de texto
-    @FXML private Text txt_star;
+    @FXML private Text txt_rating;
     @FXML private Text txt_username;
     @FXML private Text txt_date;
     @FXML private Text txt_typeContent;
     @FXML private Text txt_nameContent;
     @FXML private Label txt_description;
-
-    // Componentes multimedia
-    @FXML private StackPane mediaContainer;  // Cambiado de VBox a StackPane
+    @FXML private StackPane mediaContainer;
     @FXML private ImageView imgPreview;
     @FXML private Label lblFileInfo;
     @FXML private ImageView iconType;
@@ -33,10 +30,20 @@ public class ContentCardController {
         txt_nameContent.setText(contenido.getName());
         txt_typeContent.setText(contenido.getTypeContent());
         txt_description.setText(contenido.getDescription());
-        txt_star.setText(String.valueOf(contenido.getTheRating()));
+        txt_rating.setText(String.valueOf(calcularRatingPromedio(contenido)));
 
         // Configurar representación visual del contenido
         configurarVisualizacionContenido(contenido);
+    }
+
+    private double calcularRatingPromedio(Content contenido) {
+        if (contenido.getTheRating().isEmpty()) {
+            return 0.0;
+        }
+        return contenido.getTheRating().stream()
+                .mapToDouble(r -> r.getAverageRating())
+                .average()
+                .orElse(0.0);
     }
 
     private void configurarVisualizacionContenido(Content contenido) {
@@ -62,24 +69,14 @@ public class ContentCardController {
     private void mostrarImagen(Content contenido) {
         try {
             Image image = new Image(new ByteArrayInputStream(contenido.getFileData()));
-
-            // Configurar el ImageView
             imgPreview.setImage(image);
             imgPreview.setPreserveRatio(true);
             imgPreview.setSmooth(true);
             imgPreview.setCache(true);
-
-            // Tamaño fijo para todas las imágenes
             imgPreview.setFitWidth(150);
             imgPreview.setFitHeight(150);
-
-            // Centrar la imagen
-            imgPreview.setTranslateX((150 - imgPreview.getFitWidth()) / 2);
-            imgPreview.setTranslateY((150 - imgPreview.getFitHeight()) / 2);
-
             mediaContainer.getChildren().add(imgPreview);
             imgPreview.setVisible(true);
-
         } catch (Exception e) {
             mostrarIconoTipoArchivo(contenido);
         }
@@ -93,8 +90,8 @@ public class ContentCardController {
             iconPath += "video-icon.png";
         } else if (contentType.contains("audio")) {
             iconPath += "audio-icon.png";
-        } else if (contentType.contains("documento") || contentType.contains("pdf") || contentType.contains("docx")) {
-            iconPath += "doc-icon.png";
+        } else if (contentType.contains("texto")) {
+            iconPath += "text-icon.png";
         } else {
             iconPath += "file-icon.png";
         }

@@ -24,11 +24,9 @@ public class LoadContentController {
 
     @FXML
     void initialize() {
-        // Inicializar ComboBox
         cb_typeContent.getItems().setAll("Imagen", "Audio", "Video", "Texto");
         cb_typeContent.getSelectionModel().selectFirst();
 
-        // Listener para cambiar el comportamiento según el tipo seleccionado
         cb_typeContent.valueProperty().addListener((obs, oldVal, newVal) -> {
             boolean esTexto = "Texto".equals(newVal);
             btn_chooseFile.setDisable(esTexto);
@@ -71,91 +69,75 @@ public class LoadContentController {
 
     @FXML
     void btn_loadContent() {
-        if (txt_title.getText().isEmpty()) {
-            AlertService.showError("El título es obligatorio");
-            return;
-        }
+        if (validarCampos()) {
+            try {
+                Content nuevoContenido = crearContenido();
 
-        try {
-            Content nuevoContenido;
-            String tipoSeleccionado = cb_typeContent.getValue();
-
-            if ("Texto".equals(tipoSeleccionado)) {
-                // Crear contenido de texto directo
-                if (txt_description.getText().isEmpty()) {
-                    AlertService.showError("La descripción es obligatoria para contenido de texto");
-                    return;
+                if (principalController != null) {
+                    principalController.getContenidosTemporales().add(nuevoContenido);
+                    principalController.refrescarContenidos();
                 }
 
-                nuevoContenido = createContent(
-                        txt_title.getText(),
-                        "Texto",
-                        txt_description.getText(),
-                        txt_topic.getText(),
-                        txt_description.getText().getBytes("UTF-8"),
-                        "texto_directo.txt",
-                        "text/plain"
-                );
-            } else {
-                // Validar archivo para otros tipos de contenido
-                if (selectedFile == null) {
-                    AlertService.showError("Debe seleccionar un archivo para el tipo: " + tipoSeleccionado);
-                    return;
-                }
+                Stage stage = (Stage) lbl_fileName.getScene().getWindow();
+                stage.close();
 
-                byte[] fileData = Files.readAllBytes(selectedFile.toPath());
-                String fileType = Files.probeContentType(selectedFile.toPath());
-
-                nuevoContenido = createContent(
-                        txt_title.getText(),
-                        tipoSeleccionado,
-                        txt_description.getText(),
-                        txt_topic.getText(),
-                        fileData,
-                        selectedFile.getName(),
-                        fileType
-                );
+                AlertService.showInfo("Contenido subido correctamente");
+            } catch (Exception e) {
+                AlertService.showError("Error al subir contenido: " + e.getMessage());
+                e.printStackTrace();
             }
-
-            if (principalController != null) {
-                principalController.getContenidosTemporales().add(nuevoContenido);
-                principalController.refrescarContenidos();
-            }
-
-            Stage stage = (Stage) lbl_fileName.getScene().getWindow();
-            stage.close();
-
-            AlertService.showInfo("Contenido subido correctamente");
-        } catch (Exception e) {
-            AlertService.showError("Error al subir contenido: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
-    private Content createContent(String title, String type, String description,
-                                  String topic, byte[] fileData, String fileName,
-                                  String fileType) {
-        User author = new Student(
-                "defaultUser",
-                "user@example.com",
+    private boolean validarCampos() {
+        if (txt_title.getText().trim().isEmpty()) {
+            AlertService.showError("El título es requerido");
+            return false;
+        }
+
+        if (!"Texto".equals(cb_typeContent.getValue()) && selectedFile == null) {
+            AlertService.showError("Seleccione un archivo");
+            return false;
+        }
+
+        return true;
+    }
+
+    private Content crearContenido() throws IOException {
+        String tipo = cb_typeContent.getValue();
+        boolean esTexto = "Texto".equals(tipo);
+
+        byte[] datos = esTexto ?
+                txt_description.getText().getBytes("UTF-8") :
+                Files.readAllBytes(selectedFile.toPath());
+
+        String nombreArchivo = esTexto ?
+                "texto_" + System.currentTimeMillis() + ".txt" :
+                selectedFile.getName();
+
+        String tipoArchivo = esTexto ?
+                "text/plain" :
+                Files.probeContentType(selectedFile.toPath());
+
+        User autor = new Student(
+                "usuarioActual",
+                "usuario@ejemplo.com",
                 "user123",
-                "password123",
+                "pass123",
                 "Universidad del Quindío"
         );
 
-        Rating rating = new Rating();
-
         return new Content(
-                title,
+                txt_title.getText(),
                 LocalDateTime.now(),
-                type,
-                description,
-                topic,
-                author,
-                rating,
-                fileData,
-                fileName,
-                fileType != null ? fileType : "application/octet-stream"
+                tipo,
+                txt_description.getText(),
+                txt_topic.getText(),
+                autor,
+                new Rating(), // Rating inicial vacío
+                datos,
+                nombreArchivo,
+                tipoArchivo
         );
     }
 
