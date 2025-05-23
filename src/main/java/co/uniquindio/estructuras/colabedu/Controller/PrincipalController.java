@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import co.uniquindio.estructuras.colabedu.App;
 import co.uniquindio.estructuras.colabedu.Model.Content;
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -17,8 +20,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PrincipalController {
 
@@ -36,7 +41,63 @@ public class PrincipalController {
     @FXML
     private ScrollPane content_container;
 
+    @FXML
+    private AnchorPane profileSidebar;
+
+    @FXML
+    private Pane overlay;
+
     @FXML private VBox contenedorContenidos;
+
+    //Metodo para mostrar/ocultar la barra lateral
+    private void toggleProfileSidebar(boolean show) {
+        if (show) {
+            profileSidebar.setVisible(true);
+            overlay.setVisible(true);
+        }
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(300), profileSidebar);
+        tt.setFromX(show ? 300 : 0);
+        tt.setToX(show ? 0 : 300);
+        tt.setOnFinished(e -> {
+            if (!show) {
+                profileSidebar.setVisible(false);
+                overlay.setVisible(false);
+            }
+        });
+        tt.play();
+    }
+
+    @FXML
+    void btn_perfil(MouseEvent event) {
+        System.out.println("Botón Perfil");
+        toggleProfileSidebar(true);
+    }
+
+    @FXML
+    void handleConfiguracion(ActionEvent event) throws IOException {
+        System.out.println("Abriendo configuración de cuenta...");
+        // Implementar lógica de configuración
+        App.setRoot("ProfileSettingsView" , "ColabEdu -Información de tu perfil-");
+    }
+
+    @FXML
+    void handlePrivacidad(ActionEvent event) {
+        System.out.println("Abriendo configuración de privacidad...");
+        // Implementar lógica de privacidad
+    }
+
+    @FXML
+    void handleCerrarSesion(ActionEvent event) throws IOException {
+        System.out.println("Cerrando sesión...");
+        // Implementar logica de cierre de sesión ...
+        App.setRoot("LogInView", "ColabEdu -Página principal-");
+    }
+
+    @FXML
+    void closeProfileSidebar(ActionEvent event) {
+        toggleProfileSidebar(false);
+    }
 
     @FXML
     public void refrescarContenidos() {
@@ -105,11 +166,6 @@ public class PrincipalController {
     }
 
     @FXML
-    void btn_perfil(MouseEvent event) {
-        System.out.println("Botón Perfil");
-    }
-
-    @FXML
     void btn_principal(MouseEvent event) {
         System.out.println("Botón Principal");
     }
@@ -133,6 +189,7 @@ public class PrincipalController {
     void initialize() {
         assert txt_search != null : "fx:id=\"txt_search\" was not injected: check your FXML file 'PrincipalView.fxml'.";
 
+        profileSidebar.setTranslateX(300);
     }
 
 }

@@ -22,3 +22,4 @@
         <Button layoutX="356.0" layoutY="403.0" mnemonicParsing="false" onMousePressed="#btn_logIn" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Log In" textFill="WHITE" />
     </children>
 </AnchorPane>
+
