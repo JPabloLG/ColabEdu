@@ -1,5 +1,6 @@
 package co.uniquindio.estructuras.colabedu;
 
+import co.uniquindio.estructuras.colabedu.Util.DataInitializer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ public class App extends javafx.application.Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
         stage = primaryStage;
         stage.setTitle("ColabEdu -Inicia sesión-");
         scene = new Scene(loadFXML("LoginView"), 1000, 600);

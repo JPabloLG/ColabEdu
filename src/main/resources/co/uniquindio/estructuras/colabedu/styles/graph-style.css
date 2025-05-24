@@ -1,0 +1,66 @@
+/* Estilos para el grafo */
+.graph-pane {
+    -fx-background-color: #f8f9fa;
+    -fx-min-width: 800px;
+    -fx-min-height: 600px;
+    -fx-pref-width: 800px;
+    -fx-pref-height: 600px;
+}
+
+/* Estilos para la barra de herramientas */
+.tool-bar {
+    -fx-background-color: #343a40;
+    -fx-padding: 10px;
+}
+
+.title-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 10px 0 5px;
+}
+
+/* Estilos para los botones */
+.action-button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 5px;
+}
+
+.close-button {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 5px;
+}
+
+.action-button:hover {
+    -fx-background-color: #218838;
+}
+
+.close-button:hover {
+    -fx-background-color: #c82333;
+}
+
+/* Estilos para el área de desplazamiento */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Estilos para el pie de página */
+.footer-box {
+    -fx-background-color: #e9ecef;
+    -fx-padding: 10px;
+}
+
+.footer-label {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 12px;
+}

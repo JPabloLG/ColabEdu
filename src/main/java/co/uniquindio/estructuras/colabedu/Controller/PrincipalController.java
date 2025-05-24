@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 
 import co.uniquindio.estructuras.colabedu.App;
 import co.uniquindio.estructuras.colabedu.Model.Content;
+import co.uniquindio.estructuras.colabedu.Model.Student;
+import co.uniquindio.estructuras.colabedu.View.AffinityGraphLauncher;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -148,6 +150,30 @@ public class PrincipalController {
     @FXML
     void btn_grupos(MouseEvent event) {
         System.out.println("Botón Grupos");
+
+        // Crear datos de prueba
+        Student estudiantePrueba = new Student("Juan Pablo", "juanp@gmail.com", "001", "pass1234", "Universidad del Quindío");
+        Student amigo1 = new Student("María García", "maria@gmail.com", "002", "pass1235", "Universidad del Quindío");
+        Student amigo2 = new Student("Carlos Barahona", "carlos@gmail.com", "003", "pass1236", "Universidad del Quindío");
+        Student amigo3 = new Student("Willinton Vergara", "carlos@gmail.com", "003", "pass1236", "Universidad del Quindío");
+        Student amigo4 = new Student("Elkin Bermu", "carlos@gmail.com", "003", "pass1236", "Universidad del Quindío");
+        Student amigo5 = new Student("Esteban Maya", "carlos@gmail.com", "003", "pass1236", "Universidad del Quindío");
+
+        // Establecer amistades
+        estudiantePrueba.addFriend(amigo1);
+        estudiantePrueba.addFriend(amigo2);
+        estudiantePrueba.addFriend(amigo3);
+        estudiantePrueba.addFriend(amigo4);
+        estudiantePrueba.addFriend(amigo5);
+
+        // Mostrar grafo
+        AffinityGraphLauncher.showAffinityGraph(estudiantePrueba);
+    }
+
+    // Método de ejemplo para obtener el estudiante actual, aquí ignacio, debe ir el currentUser
+    private Student obtenerEstudianteActual() {
+        // Implementa la lógica para obtener el estudiante actual
+        return new Student("Juan Pablo", "juan@gmail.com", "001", "pass123", "Universidad del Quindío");
     }
 
     @FXML
