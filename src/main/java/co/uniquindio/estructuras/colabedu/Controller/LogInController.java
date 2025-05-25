@@ -6,6 +6,7 @@ import co.uniquindio.estructuras.colabedu.DB.JDBC;
 import co.uniquindio.estructuras.colabedu.DTO.StudentDTO;
 import co.uniquindio.estructuras.colabedu.Model.AcademicSocialNetwork;
 import co.uniquindio.estructuras.colabedu.Model.Student;
+import co.uniquindio.estructuras.colabedu.Util.EmailService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -38,8 +39,35 @@ public class LogInController {
     private static UserDAOImpl userDAO = new UserDAOImpl(connection);
 
     @FXML
-    void btn_createAccount(MouseEvent event) throws IOException {
+    void btn_Account(MouseEvent event) throws IOException {
         App.setRoot("RegisterView", "ColabEdu -Registro de Usuario-");
+    }
+    @FXML
+    void btn_Password(MouseEvent event) throws IOException {
+        if(txt_username.getText().isEmpty()){
+            showAlert("Error", "The email cannot be empty.");
+            return;
+        }
+        String email = txt_username.getText();
+
+        // Create and start a new thread for email sending
+        Thread emailThread = new Thread(() -> {
+            // Find user by email
+            StudentDTO student = userDAO.findByEmail(email);
+
+            if (student != null) {
+                // Send password recovery email
+                EmailService emailService = new EmailService();
+                emailService.sendPasswordRecoveryEmail(student.getEmail(), student.getName(), student.getPassword());
+            } else {
+                System.out.println("User with email " + email + " not found.");
+            }
+        });
+
+        // Start the thread
+        emailThread.start();
+
+        showAlertInfo("Information", "If your email is registered, you will receive your password shortly. Please check your inbox.");
     }
 
     @FXML
@@ -95,6 +123,13 @@ public class LogInController {
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showAlertInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
