@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.PriorityQueue;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 public class Student extends User {
 
@@ -24,7 +27,7 @@ public class Student extends User {
         this.contentBinarySearchTree = new LinkedList<>();
     }
 
-    public Student(String name, String email, String id, String password, String instituto) {
+    public Student(String name, String email, String id, String password) {
         super(name, email, id, password);
         this.instituto = instituto;
         this.friends = new ArrayList<>();
@@ -110,10 +113,25 @@ public class Student extends User {
         return studyGroupLinkedList;
     }
 
+
     // Métodos de User
     @Override
     public void updateContent(Content content) {
         // Implementación según necesidades
+    /*
+    @Override
+    public void updateContent(Content content) {
+        for (Content i:contentBinarySearchTree) {
+            if(i.equals(content)){
+                i.setName(content.getName());
+                i.setDescription(content.getDescription());
+                i.setPublicationDate(content.getPublicationDate());
+                break;
+            }
+
+        }
+
+    }*/
     }
 
     @Override
@@ -134,6 +152,17 @@ public class Student extends User {
                 ", instituto='" + instituto + '\'' +
                 ", friends=" + friends.stream().map(Student::getName).toList() +
                 '}';
+    }
+    public void createContent(String name, LocalDateTime publicationDate, String typeContent,
+                              String description, String subject, ArrayList<Rating> theRating){
+        //Content content = new Content(name, publicationDate, typeContent, description, subject, this, theRating);
+        //contentBinarySearchTree.add(content);
+    }
+
+    public void requestHelp(){}
+    public List<Content> searchContent(String keyword) {
+        //return contentBinarySearchTree.search(keyword);
+        return  null;
     }
 
     // Clase interna para el grafo

@@ -11,8 +11,10 @@ import javafx.scene.text.Text;
 import co.uniquindio.estructuras.colabedu.Model.Content;
 
 public class ContentCardController {
-
+  
     @FXML private Text txt_rating;
+    //Text Components
+    @FXML private Text txt_star;
     @FXML private Text txt_username;
     @FXML private Text txt_date;
     @FXML private Text txt_typeContent;
@@ -24,7 +26,7 @@ public class ContentCardController {
     @FXML private ImageView iconType;
 
     public void inicializarDatos(Content contenido) {
-        // Configurar información básica
+        //Set the basic information
         txt_username.setText(contenido.getTheUser().getName());
         txt_date.setText(contenido.getPublicationDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         txt_nameContent.setText(contenido.getName());

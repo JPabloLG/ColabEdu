@@ -3,6 +3,8 @@ package co.uniquindio.estructuras.colabedu.Controller;
 import java.io.*;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -126,7 +128,6 @@ public class LoadContentController {
                 "pass123",
                 "Universidad del Quindío"
         );
-
         return new Content(
                 txt_title.getText(),
                 LocalDateTime.now(),
@@ -149,5 +150,13 @@ public class LoadContentController {
 
     public void setPrincipalController(PrincipalController principalController) {
         this.principalController = principalController;
+    }
+}
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

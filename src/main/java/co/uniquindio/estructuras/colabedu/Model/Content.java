@@ -32,6 +32,7 @@ public class Content {
         this.theRating = new ArrayList<>();
     }
 
+
     public String getName() {
         return name;
     }
