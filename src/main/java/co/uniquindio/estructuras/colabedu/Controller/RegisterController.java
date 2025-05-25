@@ -13,7 +13,7 @@ import co.uniquindio.estructuras.colabedu.App;
 import co.uniquindio.estructuras.colabedu.DAO.UserDAO;
 import co.uniquindio.estructuras.colabedu.DAO.UserDAOImpl;
 import co.uniquindio.estructuras.colabedu.DB.JDBC;
-import co.uniquindio.estructuras.colabedu.DTO.UserDTO;
+import co.uniquindio.estructuras.colabedu.DTO.StudentDTO;
 import co.uniquindio.estructuras.colabedu.Util.EmailService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -40,11 +40,11 @@ public class RegisterController {
     private TextField txt_password;
 
     @FXML
-    private TextField txt_username;
+    private TextField txt_userId;
 
-    //Instancias de los servicios
+    //Services instances
     EmailService emailService = new EmailService();
-    //Instancia de la base de datos
+    //DB instance
     private static final Connection connection = JDBC.getConnection();
     UserDAOImpl userDAO = new UserDAOImpl(connection);
 
@@ -58,39 +58,45 @@ public class RegisterController {
     void btn_signIn(MouseEvent event) throws IOException {
         String email = txt_email.getText();
         String name = txt_name.getText();
-        String username = txt_username.getText();
+        String userId = txt_userId.getText();
         String password = txt_password.getText();
         String confirmPassword = txt_confirmPassword.getText();
-        UserDTO user = new UserDTO(name, email, username, password);
+        StudentDTO user = new StudentDTO(name, email, userId, password);
 
-        //Validar que el nombre de usuario no esté vacío
-        if (username.isEmpty()) {
-            System.out.println("El nombre de usuario no puede estar vacío.");
+        //Check the username
+        if (userId.isEmpty()) {
+            System.out.println("The user´s username cannot be empty.");
             return;
         }
-        //Validar que el nombre del usuario no esté vacío
+        //Check the name
         if (name.isEmpty()) {
-            System.out.println("El nombre del usuario no puede estar vacío.");
+            System.out.println("The user´s name cannot be empty.");
             return;
         }
-        //Validar que el email del usuario no esté vacío
+        //Check the email
         if (email.isEmpty()) {
-            System.out.println("El email del usuario no puede estar vacío.");
+            System.out.println("The user´s email cannot be empty.");
             return;
         }
-        //Validar que la contraseña no esté vacía
+        //Check the password
         if (password.isEmpty()) {
-            System.out.println("La contraseña no puede estar vacía.");
+            System.out.println("The user´s password cannot be empty.");
             return;
         }
-        //Validar que la contraseña y la confirmación coincidan
+        //Check both passwords
         if (!password.equals(confirmPassword)) {
-            System.out.println("Las contraseñas no coinciden.");
+            System.out.println("The passwords do not match.");
             return;
         }
         else {
             userDAO.save(user);
-            emailService.enviarCorreo(email, username); //prueba de correo
+
+            // Execute email sending in a separate thread
+            new Thread(() -> {
+                emailService.sendRegistrationEmail(email, name); //prueba de correo
+            }).start();
+
+            System.out.println("The user has been registered successfully.");
             App.setRoot("LogInView", "ColabEdu -Página principal-");
         }
     }
@@ -101,9 +107,8 @@ public class RegisterController {
         assert txt_email != null : "fx:id=\"txt_email\" was not injected: check your FXML file 'RegisterView.fxml'.";
         assert txt_name != null : "fx:id=\"txt_name\" was not injected: check your FXML file 'RegisterView.fxml'.";
         assert txt_password != null : "fx:id=\"txt_password\" was not injected: check your FXML file 'RegisterView.fxml'.";
-        assert txt_username != null : "fx:id=\"txt_username\" was not injected: check your FXML file 'RegisterView.fxml'.";
+        assert txt_userId != null : "fx:id=\"txt_username\" was not injected: check your FXML file 'RegisterView.fxml'.";
 
     }
 
 }
-

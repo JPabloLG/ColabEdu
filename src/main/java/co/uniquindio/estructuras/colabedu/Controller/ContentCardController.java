@@ -12,7 +12,7 @@ import co.uniquindio.estructuras.colabedu.Model.Content;
 
 public class ContentCardController {
 
-    // Componentes de texto
+    //Text Components
     @FXML private Text txt_star;
     @FXML private Text txt_username;
     @FXML private Text txt_date;
@@ -20,20 +20,20 @@ public class ContentCardController {
     @FXML private Text txt_nameContent;
     @FXML private Label txt_description;
 
-    // Componentes multimedia alternativos
+    //Media Components
     @FXML private VBox mediaContainer;
     @FXML private ImageView imgPreview;
     @FXML private Label lblFileInfo;
     @FXML private ImageView iconType;
 
     public void inicializarDatos(Content contenido) {
-        // Configurar información básica
+        //Set the basic information
         txt_username.setText(contenido.getTheUser().getName());
         txt_date.setText(contenido.getPublicationDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         txt_nameContent.setText(contenido.getName());
         txt_typeContent.setText(contenido.getTypeContent());
         txt_description.setText(contenido.getDescription());
-        txt_star.setText(String.valueOf(contenido.getTheRating().getRating()));
+        //txt_star.setText(String.valueOf(contenido.getTheRating().getRating()));
 
         // Configurar representación visual del contenido
         configurarVisualizacionContenido(contenido);

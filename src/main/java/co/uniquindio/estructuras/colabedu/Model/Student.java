@@ -1,6 +1,7 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends User{
@@ -13,18 +14,12 @@ public class Student extends User{
 
     private PriorityQueue<HelpRequest> helpRequestPriorityQueue;
 
-
-    //Hay que cambiar la linked list a BinarySearchTree
     private LinkedList<Content> contentBinarySearchTree;
 
 
-    public Student(String instituto) {
-        this.instituto = instituto;
-    }
 
-    public Student(String name, String email, String id, String password, String instituto) {
+    public Student(String name, String email, String id, String password) {
         super(name, email, id, password);
-        this.instituto = instituto;
     }
 
     public Student() {
@@ -47,7 +42,7 @@ public class Student extends User{
                 ", helpRequestPriorityQueue=" + helpRequestPriorityQueue +
                 '}';
     }
-
+    /*
     @Override
     public void updateContent(Content content) {
         for (Content i:contentBinarySearchTree) {
@@ -60,6 +55,11 @@ public class Student extends User{
 
         }
 
+    }*/
+
+    @Override
+    public void updateContent(Content content) {
+        //contentBinarySearchTree.update(content);
     }
 
     @Override
@@ -73,14 +73,15 @@ public class Student extends User{
     }
 
     public void createContent(String name, LocalDateTime publicationDate, String typeContent,
-                              String description, String subject, Rating theRating){
-        Content content = new Content(name,publicationDate, typeContent, description, subject, this, theRating);
-        contentBinarySearchTree.add(content);
+                              String description, String subject, ArrayList<Rating> theRating){
+        //Content content = new Content(name, publicationDate, typeContent, description, subject, this, theRating);
+        //contentBinarySearchTree.add(content);
     }
 
     public void requestHelp(){}
     public List<Content> searchContent(String keyword) {
-        return contentBinarySearchTree.search(keyword);
+        //return contentBinarySearchTree.search(keyword);
+        return  null;
     }
 
     // Valorar contenido educativo

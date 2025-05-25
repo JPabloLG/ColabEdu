@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import co.uniquindio.estructuras.colabedu.Model.*;
@@ -131,16 +132,23 @@ public class LoadContentController {
     private Content createContent(String title, String type, String description,
                                   String topic, byte[] fileData, String fileName,
                                   String fileType) {
-        // Usuario temporal - reemplaza con tu lógica real
-        User author = new Moderator(
-                "defaultUser",
-                "user@example.com",
-                "user123",
-                "password123"
-        );
+        // Obtener el usuario actual desde AcademicSocialNetwork
+        User author = AcademicSocialNetwork.getSingleton().getCurrentUser();
+
+        // Si no hay usuario autenticado, usar un valor por defecto (esto no debería ocurrir)
+        if (author == null) {
+            showAlert("Advertencia", "No hay usuario autenticado. Se usará un usuario por defecto.");
+            author = new Moderator(
+                    "defaultUser",
+                    "user@example.com",
+                    "user123",
+                    "password123"
+            );
+        }
 
         // Rating inicial
-        Rating rating = new Rating(0);
+        //Rating rating = new Rating(0);
+        ArrayList<Rating> ratings = new ArrayList<>();
 
         return new Content(
                 title,
@@ -149,7 +157,7 @@ public class LoadContentController {
                 description,
                 topic,
                 author,
-                rating,
+                ratings,
                 fileData,
                 fileName,
                 fileType != null ? fileType : "application/octet-stream"

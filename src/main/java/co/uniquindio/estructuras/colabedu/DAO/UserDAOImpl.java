@@ -17,14 +17,13 @@ public class UserDAOImpl implements  UserDAO{
     }
 
     @Override
-    public void save(UserDTO user) {
-        String sql = "INSERT INTO users (user_id, name, email,identifier,password  ) VALUES (?, ?, ?, ?, ?)";
+    public void save(StudentDTO user) {
+        String sql = "INSERT INTO users (name, email, identifier, password) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getId());
-            stmt.setString(2, user.getName());
-            stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getId());
-            stmt.setString(5, user.getPassword());
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getId());
+            stmt.setString(4, user.getPassword());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,12 +32,17 @@ public class UserDAOImpl implements  UserDAO{
 
     @Override
     public StudentDTO findById(int id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
+        String sql = "SELECT * FROM users WHERE user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new StudentDTO(rs.getString("name"), rs.getString("email"), rs.getString("id"), rs.getString("password"));
+                return new StudentDTO(
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("user_id"),
+                        rs.getString("password")
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
