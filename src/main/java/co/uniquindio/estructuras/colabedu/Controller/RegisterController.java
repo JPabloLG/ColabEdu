@@ -62,7 +62,7 @@ public class RegisterController {
         String password = txt_password.getText();
         String confirmPassword = txt_confirmPassword.getText();
       
-        StudentDTO user = new StudentDTO(name, email, username, password);
+        StudentDTO user = new StudentDTO(name, email, userId, password);
 
         //Check the username
         if (userId.isEmpty()) {

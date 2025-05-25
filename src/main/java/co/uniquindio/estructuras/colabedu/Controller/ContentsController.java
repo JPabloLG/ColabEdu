@@ -2,10 +2,18 @@ package co.uniquindio.estructuras.colabedu.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import co.uniquindio.estructuras.colabedu.App;
+import co.uniquindio.estructuras.colabedu.DAO.ContentDAO;
+import co.uniquindio.estructuras.colabedu.DAO.ContentDAOImpl;
+import co.uniquindio.estructuras.colabedu.DAO.ContentDTO;
+import co.uniquindio.estructuras.colabedu.Model.AcademicSocialNetwork;
 import co.uniquindio.estructuras.colabedu.Model.Content;
+import co.uniquindio.estructuras.colabedu.Model.Student;
+import co.uniquindio.estructuras.colabedu.Model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,16 +41,64 @@ public class ContentsController implements Initializable {
     @FXML
     private TextField txt_search;
 
+    private ContentDAO contentDAO;
+
+    public ContentsController() {
+        this.contentDAO = new ContentDAOImpl();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cargarContenidos();
     }
 
+    /**
+     * Convierte un ContentDTO a un objeto Content
+     * @param dto El objeto ContentDTO a convertir
+     * @return Un objeto Content con los datos del DTO
+     */
+    private Content convertDTOToContent(ContentDTO dto) {
+        // Obtener el usuario actual
+        User currentUser = AcademicSocialNetwork.getSingleton().getCurrentUser();
+
+        // Crear un objeto Content con los datos del DTO
+        Content content = new Content(
+            dto.getTitle(),
+            dto.getPublicationDate(),
+            dto.getContentType(),
+            dto.getDescription(),
+            dto.getSubject(),
+            currentUser,
+            null, // No tenemos rating en el DTO
+            new byte[0], // No tenemos fileData en el DTO
+            dto.getContentUrl(), // Usamos contentUrl como fileName
+            dto.getContentType() // Usamos contentType como fileType
+        );
+
+        return content;
+    }
+
     private void cargarContenidos() {
         contenedorContenidos.getChildren().clear();
 
-        // Obtener los contenidos del PrincipalController
-        for (Content contenido : PrincipalController.contenidosTemporales) {
+        // Obtener el usuario actual
+        User currentUser = AcademicSocialNetwork.getSingleton().getCurrentUser();
+        if (currentUser == null) {
+            System.err.println("No hay usuario actual");
+            return;
+        }
+
+        // Obtener los contenidos del usuario desde la base de datos
+        List<ContentDTO> contentDTOs = contentDAO.findByUserId(currentUser.getId());
+        List<Content> contents = new ArrayList<>();
+
+        // Convertir los DTOs a objetos Content
+        for (ContentDTO dto : contentDTOs) {
+            contents.add(convertDTOToContent(dto));
+        }
+
+        // Mostrar los contenidos
+        for (Content contenido : contents) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/contentCard.fxml"));
                 AnchorPane card = loader.load();
@@ -57,6 +113,27 @@ public class ContentsController implements Initializable {
 
             } catch (IOException e) {
                 System.err.println("Error al cargar la tarjeta de contenido: " + e.getMessage());
+            }
+        }
+
+        // Si no hay contenidos, mostrar también los contenidos temporales
+        if (contents.isEmpty()) {
+            for (Content contenido : PrincipalController.contenidosTemporales) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/uniquindio/estructuras/colabedu/contentCard.fxml"));
+                    AnchorPane card = loader.load();
+
+                    ContentCardController cardController = loader.getController();
+                    cardController.inicializarDatos(contenido);
+
+                    card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);");
+                    VBox.setMargin(card, new Insets(0, 0, 15, 0));
+
+                    contenedorContenidos.getChildren().add(card);
+
+                } catch (IOException e) {
+                    System.err.println("Error al cargar la tarjeta de contenido: " + e.getMessage());
+                }
             }
         }
     }
