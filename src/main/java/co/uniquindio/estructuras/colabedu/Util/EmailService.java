@@ -3,6 +3,9 @@ package co.uniquindio.estructuras.colabedu.Util;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 import java.util.Properties;
+import jakarta.activation.DataHandler;
+import jakarta.activation.FileDataSource;
+import java.io.File;
 
 public class EmailService {
 
@@ -76,7 +79,6 @@ public class EmailService {
             message.setFrom(new InternetAddress("noreply.colabedu@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo));
             message.setSubject("Confirmación de registro - ColabEdu");
-
             // Crear contenido HTML simple sin imagen
             String htmlContent = "<p>Hola <strong>" + nombre + "</strong>,</p>"
                     + "<p>Tu registro en ColabEdu fue todo un éxito. ¡Bienvenido a nuestra red para estudiantes!</p>"
@@ -86,7 +88,6 @@ public class EmailService {
 
             // Establecer el contenido HTML directamente
             message.setContent(htmlContent, "text/html; charset=utf-8");
-
             Transport.send(message);
             System.out.println("Correo enviado exitosamente.");
         } catch (MessagingException e) {

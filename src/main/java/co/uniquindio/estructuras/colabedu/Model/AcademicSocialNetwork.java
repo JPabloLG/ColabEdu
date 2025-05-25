@@ -13,8 +13,6 @@ public class AcademicSocialNetwork {
         return singleton;
     }
 
-    //falta el constructor con sus respectivas lista propias
-
     public Student getCurrentUser() {
         return currentUser;
     }

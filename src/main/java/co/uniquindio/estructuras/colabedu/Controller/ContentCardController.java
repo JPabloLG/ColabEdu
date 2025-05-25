@@ -6,12 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import co.uniquindio.estructuras.colabedu.Model.Content;
 
 public class ContentCardController {
-
+  
+    @FXML private Text txt_rating;
     //Text Components
     @FXML private Text txt_star;
     @FXML private Text txt_username;
@@ -19,9 +20,7 @@ public class ContentCardController {
     @FXML private Text txt_typeContent;
     @FXML private Text txt_nameContent;
     @FXML private Label txt_description;
-
-    //Media Components
-    @FXML private VBox mediaContainer;
+    @FXML private StackPane mediaContainer;
     @FXML private ImageView imgPreview;
     @FXML private Label lblFileInfo;
     @FXML private ImageView iconType;
@@ -33,10 +32,20 @@ public class ContentCardController {
         txt_nameContent.setText(contenido.getName());
         txt_typeContent.setText(contenido.getTypeContent());
         txt_description.setText(contenido.getDescription());
-        //txt_star.setText(String.valueOf(contenido.getTheRating().getRating()));
+        txt_rating.setText(String.valueOf(calcularRatingPromedio(contenido)));
 
         // Configurar representación visual del contenido
         configurarVisualizacionContenido(contenido);
+    }
+
+    private double calcularRatingPromedio(Content contenido) {
+        if (contenido.getTheRating().isEmpty()) {
+            return 0.0;
+        }
+        return contenido.getTheRating().stream()
+                .mapToDouble(r -> r.getAverageRating())
+                .average()
+                .orElse(0.0);
     }
 
     private void configurarVisualizacionContenido(Content contenido) {
@@ -63,11 +72,13 @@ public class ContentCardController {
         try {
             Image image = new Image(new ByteArrayInputStream(contenido.getFileData()));
             imgPreview.setImage(image);
-            imgPreview.setVisible(true);
+            imgPreview.setPreserveRatio(true);
+            imgPreview.setSmooth(true);
+            imgPreview.setCache(true);
             imgPreview.setFitWidth(150);
             imgPreview.setFitHeight(150);
-            imgPreview.setPreserveRatio(true);
             mediaContainer.getChildren().add(imgPreview);
+            imgPreview.setVisible(true);
         } catch (Exception e) {
             mostrarIconoTipoArchivo(contenido);
         }
@@ -81,8 +92,8 @@ public class ContentCardController {
             iconPath += "video-icon.png";
         } else if (contentType.contains("audio")) {
             iconPath += "audio-icon.png";
-        } else if (contentType.contains("documento") || contentType.contains("pdf") || contentType.contains("docx")) {
-            iconPath += "doc-icon.png";
+        } else if (contentType.contains("texto")) {
+            iconPath += "text-icon.png";
         } else {
             iconPath += "file-icon.png";
         }

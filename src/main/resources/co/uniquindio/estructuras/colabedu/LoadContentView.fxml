@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.uniquindio.estructuras.colabedu.Controller.LoadContentController"
-            prefWidth="500" prefHeight="400">
+<AnchorPane prefHeight="469.0" prefWidth="500" style="-fx-border-width: 0; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.estructuras.colabedu.Controller.LoadContentController">
 
-   <VBox spacing="10" layoutX="10" layoutY="10">
-      <!-- Título -->
-      <Label text="Título del Contenido:"/>
-      <TextField fx:id="txt_title" promptText="Ingrese el título"/>
+   <VBox layoutX="20" layoutY="20" prefWidth="460" spacing="15">
+      <!-- Título del Contenido -->
+      <Label style="-fx-font-weight: bold;" text="Título del Contenido:" />
+      <TextField fx:id="txt_title" promptText="Ingrese el título" style="-fx-pref-width: 400;" />
 
       <!-- Tema -->
-      <Label text="Tema:"/>
-      <TextField fx:id="txt_topic" promptText="Ingrese el tema"/>
+      <Label style="-fx-font-weight: bold;" text="Tema:" />
+      <TextField fx:id="txt_topic" promptText="Ingrese el tema" style="-fx-pref-width: 400;" />
 
-      <!-- Tipo de Contenido -->
-      <Label text="Tipo de Contenido:"/>
-      <TextField fx:id="txt_typeContent" promptText="Ej: Imagen, Audio, Video"/>
+      <!-- Tipo de Contenido (ComboBox) -->
+      <Label style="-fx-font-weight: bold;" text="Tipo de Contenido:" />
+      <ComboBox fx:id="cb_typeContent" style="-fx-pref-width: 400;">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Imagen" />
+               <String fx:value="Audio" />
+               <String fx:value="Video" />
+               <String fx:value="Ninguno" />
+            </FXCollections>
+         </items>
+      </ComboBox>
 
       <!-- Descripción -->
-      <Label text="Descripción:"/>
-      <TextArea fx:id="txt_description" promptText="Ingrese una descripción"
-                wrapText="true" prefHeight="100"/>
+      <Label style="-fx-font-weight: bold;" text="Descripción:" />
+      <TextArea fx:id="txt_description" prefHeight="100" promptText="Ingrese una descripción" style="-fx-pref-width: 400;" wrapText="true" />
 
       <!-- Archivo Seleccionado -->
-      <Label fx:id="lbl_fileName" text="Ningún archivo seleccionado"/>
+      <Label fx:id="lbl_fileName" style="-fx-text-fill: #555;" text="Ningún archivo seleccionado" />
 
       <!-- Botones -->
-      <HBox spacing="10">
-         <Button text="Seleccionar Archivo" onAction="#btn_chooseFile"/>
-         <Button text="Subir Contenido" onAction="#btn_loadContent"/>
-         <Button text="Cancelar" onAction="#btn_back"/>
+      <HBox spacing="20" style="-fx-padding: 10 0 0 0;">
+         <Button onAction="#btn_chooseFile" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-pref-width: 120;" text="Seleccionar Archivo" />
+         <Button onAction="#btn_loadContent" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-pref-width: 120;" text="Subir Contenido" />
+         <Button onAction="#btn_back" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-pref-width: 120;" text="Cancelar" />
       </HBox>
    </VBox>
 </AnchorPane>

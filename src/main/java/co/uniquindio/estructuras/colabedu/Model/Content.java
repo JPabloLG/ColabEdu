@@ -11,7 +11,7 @@ public class Content {
     private String description;
     private String subject;
     private User theUser;
-    private ArrayList<Rating> theRating;
+    private ArrayList theRating;
     private byte[] fileData;
     private String fileName;
     private String fileType;
@@ -19,7 +19,7 @@ public class Content {
     // Constructor
     public Content(String name, LocalDateTime publicationDate, String typeContent,
                    String description, String subject, User theUser,
-                   ArrayList<Rating> theRating, byte[] fileData, String fileName, String fileType){
+                   Rating theRating, byte[] fileData, String fileName, String fileType){
         this.name = name;
         this.publicationDate = publicationDate;
         this.typeContent = typeContent;
