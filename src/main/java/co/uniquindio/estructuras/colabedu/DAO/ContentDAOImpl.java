@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class ContentDAOImpl implements ContentDAO{
 
-    private Connection connection;
+    //private Connection connection;
 
     public ContentDAOImpl() {
-        this.connection = JDBC.getConnection();
+        //this.connection = JDBC.getConnection();
         createTableIfNotExists();
     }
 
@@ -29,7 +29,8 @@ public class ContentDAOImpl implements ContentDAO{
                      "file VARCHAR(255)" +
                      ")";
 
-        try (Statement stmt = connection.createStatement()) {
+        try (Connection connection = JDBC.getConnection();
+             Statement stmt = connection.createStatement()){
             stmt.execute(sql);
             System.out.println("Tabla 'content' creada o ya existente");
         } catch (SQLException e) {
@@ -90,21 +91,30 @@ public class ContentDAOImpl implements ContentDAO{
         try (Connection conn = JDBC.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, userId);
-            ResultSet rs = stmt.executeQuery();
+            // Try to convert userId to integer if possible
+            try {
+                int userIdInt = Integer.parseInt(userId);
+                stmt.setInt(1, userIdInt);
+            } catch (NumberFormatException e) {
+                // If userId is not a valid integer, use it as a string
+                stmt.setString(1, userId);
+            }
 
-            while (rs.next()) {
-                ContentDTO content = new ContentDTO(
-                    rs.getInt("content_id"),
-                    rs.getString("name"),
-                    rs.getString("description"),
-                    rs.getString("type_content"),
-                    rs.getString("file"),
-                    rs.getInt("user_id"),
-                    rs.getTimestamp("publication_date").toLocalDateTime(),
-                    rs.getString("subject")
-                );
-                contents.add(content);
+            // Execute query after setting parameters
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ContentDTO content = new ContentDTO(
+                        rs.getInt("content_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("type_content"),
+                        rs.getString("file"),
+                        rs.getInt("user_id"),
+                        rs.getTimestamp("publication_date").toLocalDateTime(),
+                        rs.getString("subject")
+                    );
+                    contents.add(content);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error finding contents by user ID: " + e.getMessage());

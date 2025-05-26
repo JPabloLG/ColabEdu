@@ -9,21 +9,42 @@ import java.util.Properties;
 public class JDBC {
 
             private static Connection connection;
+            private static String url;
+            private static String user;
+            private static String password;
+            private static boolean propertiesLoaded = false;
 
-            public static Connection getConnection() {
-                if (connection != null) return connection;
+            private static void loadProperties() {
+                if (propertiesLoaded) return;
 
                 try (InputStream input = JDBC.class.getClassLoader().getResourceAsStream("db.properties")) {
                     Properties prop = new Properties();
                     prop.load(input);
 
-                    String url = prop.getProperty("db.url");
-                    String user = prop.getProperty("db.user");
-                    String password = prop.getProperty("db.password");
+                    url = prop.getProperty("db.url");
+                    user = prop.getProperty("db.user");
+                    password = prop.getProperty("db.password");
 
-                    connection = DriverManager.getConnection(url, user, password);
+                    propertiesLoaded = true;
                 } catch (Exception e) {
+                    System.err.println("Failed to load DB properties: " + e.getMessage());
+                }
+            }
+
+            public static Connection getConnection() {
+                loadProperties();
+
+                try {
+                    // Check if connection is valid
+                    if (connection != null && !connection.isClosed() && connection.isValid(5)) {
+                        return connection;
+                    }
+
+                    // Create a new connection if needed
+                    connection = DriverManager.getConnection(url, user, password);
+                } catch (SQLException e) {
                     System.err.println("DB connection failed: " + e.getMessage());
+                    e.printStackTrace();
                 }
 
                 return connection;
@@ -41,6 +62,3 @@ public class JDBC {
         }
     }
 }
-
-
-

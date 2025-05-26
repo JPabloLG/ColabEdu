@@ -1,17 +1,27 @@
 package co.uniquindio.estructuras.colabedu.Controller;
 
+import java.awt.Desktop;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.format.DateTimeFormatter;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import co.uniquindio.estructuras.colabedu.Model.Content;
 
 public class ContentCardController {
-  
+
     @FXML private Text txt_rating;
     //Text Components
     @FXML private Text txt_star;
@@ -60,9 +70,25 @@ public class ContentCardController {
         }
 
         String contentType = contenido.getTypeContent().toLowerCase();
+        String fileExtension = contenido.getFileExtension().toLowerCase();
 
-        if (contentType.contains("imagen")) {
+        if (contentType.contains("imagen") || 
+            fileExtension.equals("jpg") || 
+            fileExtension.equals("jpeg") || 
+            fileExtension.equals("png") || 
+            fileExtension.equals("gif")) {
             mostrarImagen(contenido);
+        } else if (contentType.contains("video") || 
+                  fileExtension.equals("mp4") || 
+                  fileExtension.equals("avi") || 
+                  fileExtension.equals("mov") || 
+                  fileExtension.equals("wmv")) {
+            mostrarVideo(contenido);
+        } else if (contentType.contains("audio") || 
+                  fileExtension.equals("mp3") || 
+                  fileExtension.equals("wav") || 
+                  fileExtension.equals("ogg")) {
+            mostrarAudio(contenido);
         } else {
             mostrarIconoTipoArchivo(contenido);
         }
@@ -79,6 +105,120 @@ public class ContentCardController {
             imgPreview.setFitHeight(150);
             mediaContainer.getChildren().add(imgPreview);
             imgPreview.setVisible(true);
+        } catch (Exception e) {
+            mostrarIconoTipoArchivo(contenido);
+        }
+    }
+
+    private void mostrarVideo(Content contenido) {
+        try {
+            // Mostrar icono de video
+            String iconPath = "/images/video-icon.png";
+            try {
+                Image icon = new Image(getClass().getResourceAsStream(iconPath));
+                iconType.setImage(icon);
+                iconType.setVisible(true);
+                iconType.setFitWidth(50);
+                iconType.setFitHeight(50);
+            } catch (Exception e) {
+                // Si no se puede cargar el icono, continuar sin él
+            }
+
+            // Crear botón para reproducir video
+            Button btnPlay = new Button("Reproducir Video");
+            btnPlay.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
+            // Crear contenedor vertical para organizar elementos
+            VBox mediaBox = new VBox(5);
+
+            // Mostrar información del archivo
+            lblFileInfo.setText(contenido.getFileName());
+            lblFileInfo.setVisible(true);
+
+            // Agregar elementos al contenedor
+            if (iconType.getImage() != null) {
+                mediaBox.getChildren().addAll(iconType, lblFileInfo, btnPlay);
+            } else {
+                mediaBox.getChildren().addAll(lblFileInfo, btnPlay);
+            }
+
+            // Configurar acción del botón
+            btnPlay.setOnAction(event -> {
+                try {
+                    // Guardar el archivo en una ubicación temporal
+                    File tempFile = File.createTempFile("video_", "." + contenido.getFileExtension());
+                    tempFile.deleteOnExit(); // El archivo se eliminará al cerrar la aplicación
+
+                    try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                        fos.write(contenido.getFileData());
+                    }
+
+                    // Abrir el archivo con la aplicación predeterminada del sistema
+                    Desktop.getDesktop().open(tempFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    lblFileInfo.setText("Error al reproducir: " + e.getMessage());
+                }
+            });
+
+            mediaContainer.getChildren().add(mediaBox);
+        } catch (Exception e) {
+            mostrarIconoTipoArchivo(contenido);
+        }
+    }
+
+    private void mostrarAudio(Content contenido) {
+        try {
+            // Mostrar icono de audio
+            String iconPath = "/images/audio-icon.png";
+            try {
+                Image icon = new Image(getClass().getResourceAsStream(iconPath));
+                iconType.setImage(icon);
+                iconType.setVisible(true);
+                iconType.setFitWidth(50);
+                iconType.setFitHeight(50);
+            } catch (Exception e) {
+                // Si no se puede cargar el icono, continuar sin él
+            }
+
+            // Crear botón para reproducir audio
+            Button btnPlay = new Button("Reproducir Audio");
+            btnPlay.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
+
+            // Crear contenedor vertical para organizar elementos
+            VBox mediaBox = new VBox(5);
+
+            // Mostrar información del archivo
+            lblFileInfo.setText(contenido.getFileName());
+            lblFileInfo.setVisible(true);
+
+            // Agregar elementos al contenedor
+            if (iconType.getImage() != null) {
+                mediaBox.getChildren().addAll(iconType, lblFileInfo, btnPlay);
+            } else {
+                mediaBox.getChildren().addAll(lblFileInfo, btnPlay);
+            }
+
+            // Configurar acción del botón
+            btnPlay.setOnAction(event -> {
+                try {
+                    // Guardar el archivo en una ubicación temporal
+                    File tempFile = File.createTempFile("audio_", "." + contenido.getFileExtension());
+                    tempFile.deleteOnExit(); // El archivo se eliminará al cerrar la aplicación
+
+                    try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                        fos.write(contenido.getFileData());
+                    }
+
+                    // Abrir el archivo con la aplicación predeterminada del sistema
+                    Desktop.getDesktop().open(tempFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    lblFileInfo.setText("Error al reproducir: " + e.getMessage());
+                }
+            });
+
+            mediaContainer.getChildren().add(mediaBox);
         } catch (Exception e) {
             mostrarIconoTipoArchivo(contenido);
         }

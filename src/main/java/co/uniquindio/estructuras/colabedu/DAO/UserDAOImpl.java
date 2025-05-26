@@ -77,7 +77,16 @@ public class UserDAOImpl implements  UserDAO{
 
     @Override
     public void update(StudentDTO user) {
-
+        String sql = "UPDATE users SET name = ?, email = ?, password = ? WHERE identifier = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
