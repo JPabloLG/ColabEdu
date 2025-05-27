@@ -145,5 +145,31 @@ public class Student extends User{
         HelpRequest helpRequest = new HelpRequest(title, description, this);
         this.helpRequestPriorityQueue.enqueue(helpRequest);
     }
+    public HelpRequest getNextHelpRequest() {
+        if (!helpRequestPriorityQueue.isEmpty()) {
+            return helpRequestPriorityQueue.dequeue();
+        }
+        return null; // o lanzar una excepción si se prefiere
+    }
+    public void addInterest(String interest) {
+        if (this.interests == null) {
+            this.interests = new ArrayList<>();
+        }
+        this.interests.add(interest);
+    }
+    public void removeInterest(String interest) {
+        if (this.interests != null) {
+            this.interests.remove(interest);
+        }
+    }
+    public List<Content> getContents() {
+        return contents;
+    }
+    public void setContents(List<Content> contents) {
+        this.contents = new ArrayList<>(contents);
+    }
+    public LinkedList<Message> getMessageLinkedList() {
+        return messageLinkedList;
+    }
 
 }
