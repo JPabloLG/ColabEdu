@@ -1,7 +1,9 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Student extends User{
 
@@ -13,9 +15,9 @@ public class Student extends User{
 
     private PriorityQueue<HelpRequest> helpRequestPriorityQueue;
 
+    private ArrayList<Content> contents;
 
-    //Hay que cambiar la linked list a BinarySearchTree
-    private LinkedList<Content> contentBinarySearchTree;
+    private List<String> interests;
 
 
     public Student(String instituto) {
@@ -38,6 +40,8 @@ public class Student extends User{
         this.instituto = instituto;
     }
 
+    public List<String> getInterests() { return interests; }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -50,7 +54,7 @@ public class Student extends User{
 
     @Override
     public void updateContent(Content content) {
-        for (Content i:contentBinarySearchTree) {
+        for (Content i:contents) {
             if(i.equals(content)){
                 i.setName(content.getName());
                 i.setDescription(content.getDescription());
@@ -64,23 +68,27 @@ public class Student extends User{
 
     @Override
     public void deleteContent(Content content) {
-        contentBinarySearchTree.delete(content);
+        contents.remove(content);
     }
 
     @Override
     public void publishContent(Content content) {
-        contentBinarySearchTree.add(content);
+        contents.add(content);
     }
 
     public void createContent(String name, LocalDateTime publicationDate, String typeContent,
                               String description, String subject, Rating theRating){
         Content content = new Content(name,publicationDate, typeContent, description, subject, this, theRating);
-        contentBinarySearchTree.add(content);
+        contents.add(content);
     }
 
-    public void requestHelp(){}
+
     public List<Content> searchContent(String keyword) {
-        return contentBinarySearchTree.search(keyword);
+        return contents.stream()
+                .filter(content -> content.getName().toLowerCase().contains(keyword.toLowerCase()) ||
+                        content.getDescription().toLowerCase().contains(keyword.toLowerCase()) ||
+                        content.getSubject().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     // Valorar contenido educativo
@@ -95,9 +103,18 @@ public class Student extends User{
         }
     }
             // Ver sugerencias de compañeros con intereses similares
-    public List<Student> getSuggestedPeers () {
-                // Implementar lógica para obtener estudiantes con intereses similares
-        return List.of();
+    public List<Student> getSuggestedPeers (Student currentStudent, List<Student> allStudents) {
+        List<String> myInterests = currentStudent.getInterests();
+
+        return allStudents.stream()
+                .filter(peer -> !peer.equals(currentStudent)) // evitar sugerirse a sí mismo
+                .sorted((a, b) -> {
+                    long commonA = a.getInterests().stream().filter(myInterests::contains).count();
+                    long commonB = b.getInterests().stream().filter(myInterests::contains).count();
+                    return Long.compare(commonB, commonA); // ordenar por mayor número de intereses comunes
+                })
+                .limit(5) // opcional: limitar la cantidad de sugerencias
+                .collect(Collectors.toList());
     }
 
             // Participar en grupos de estudio sugeridos automáticamente
@@ -108,6 +125,25 @@ public class Student extends User{
     public void sendMessage (Student recipient, String messageContent){
         Message message = new Message( messageContent, LocalDateTime.now());
         recipient.messageLinkedList.add(message);
+    }
+
+    public void receiveMessage(Message message) {
+        this.messageLinkedList.add(message);
+    }
+
+    public void createStudyGroup(String nameGroup, String description) {
+        StudyGroup studyGroup = new StudyGroup(nameGroup, description);
+        this.studyGroupLinkedList.add(studyGroup);
+    }
+    public void joinStudyGroup(StudyGroup studyGroup) {
+        this.studyGroupLinkedList.add(studyGroup);
+    }
+    public void leaveStudyGroup(StudyGroup studyGroup) {
+        this.studyGroupLinkedList.remove(studyGroup);
+    }
+    public void createHelpRequest(String title, String description) {
+        HelpRequest helpRequest = new HelpRequest(title, description, this);
+        this.helpRequestPriorityQueue.enqueue(helpRequest);
     }
 
 }
