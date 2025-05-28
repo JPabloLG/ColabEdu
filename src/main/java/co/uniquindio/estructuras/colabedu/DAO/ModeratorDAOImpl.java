@@ -11,38 +11,38 @@ import java.util.List;
 public class ModeratorDAOImpl implements ModeratorDAO {
 
 
-        private final Connection connection;
+    private final Connection connection;
 
-        public ModeratorDAOImpl(Connection connection) {
-            this.connection = connection;
+    public ModeratorDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
+
+    @Override
+    public void save(ModeratorDTO user) {
+        String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
-        @Override
-        public void save(ModeratorDTO user) {
-            String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setString(1, user.getName());
-                stmt.setString(2, user.getEmail());
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
+    @Override
+    public ModeratorDTO findById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new ModeratorDTO(rs.getString("name"), rs.getString("email"), rs.getString("id"), rs.getString("password"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        @Override
-        public ModeratorDTO findById(int id) {
-            String sql = "SELECT * FROM users WHERE id = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setInt(1, id);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    return new ModeratorDTO(rs.getString("name"), rs.getString("email"), rs.getString("id"), rs.getString("password"));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+        return null;
+    }
 
     @Override
     public List<ModeratorDTO> findAll() {
@@ -59,6 +59,4 @@ public class ModeratorDAOImpl implements ModeratorDAO {
 
     }
 
-    }
-
-
+}

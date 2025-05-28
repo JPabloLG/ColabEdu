@@ -6,7 +6,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Student extends User {
@@ -15,6 +17,8 @@ public class Student extends User {
     private LinkedList<Message> messageLinkedList;
     private LinkedList<StudyGroup> studyGroupLinkedList;
     private PriorityQueue<HelpRequest> helpRequestPriorityQueue;
+    private ArrayList<Content> contents;
+    private List<String> interests;
     private ArrayList<Student> friends;
     private LinkedList<Content> contentBinarySearchTree;
 
@@ -109,6 +113,9 @@ public class Student extends User {
         this.instituto = instituto;
     }
 
+    public List<String> getInterests() { return interests; }
+
+
     public LinkedList<StudyGroup> getStudyGroupLinkedList() {
         return studyGroupLinkedList;
     }
@@ -121,7 +128,7 @@ public class Student extends User {
     /*
     @Override
     public void updateContent(Content content) {
-        for (Content i:contentBinarySearchTree) {
+        for (Content i:contents) {
             if(i.equals(content)){
                 i.setName(content.getName());
                 i.setDescription(content.getDescription());
@@ -136,54 +143,85 @@ public class Student extends User {
 
     @Override
     public void deleteContent(Content content) {
-        contentBinarySearchTree.remove(content);
+        contents.remove(content);
     }
 
     @Override
     public void publishContent(Content content) {
-        contentBinarySearchTree.add(content);
+        contents.add(content);
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "name='" + getName() + '\'' +
-                ", id='" + getId() + '\'' +
-                ", instituto='" + instituto + '\'' +
-                ", friends=" + friends.stream().map(Student::getName).toList() +
-                '}';
-    }
     public void createContent(String name, LocalDateTime publicationDate, String typeContent,
-                              String description, String subject, ArrayList<Rating> theRating){
-        //Content content = new Content(name, publicationDate, typeContent, description, subject, this, theRating);
-        //contentBinarySearchTree.add(content);
+                              String description, String subject, Rating theRating, byte[] fileData, String fileName, String fileType){
+        Content content = new Content(name,publicationDate, typeContent, description, subject, this, theRating, fileData, fileName, fileType);
+        contents.add(content);
     }
 
-    public void requestHelp(){}
+
     public List<Content> searchContent(String keyword) {
-        //return contentBinarySearchTree.search(keyword);
-        return  null;
+        return contents.stream()
+                .filter(content -> content.getSubject().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
-    // Clase interna para el grafo
-    public static class GraphNode {
-        private String id;
-        private String label;
-        private double size;
+    // Ver sugerencias de compañeros con intereses similares
+    public List<Student> getSuggestedPeers (Student currentStudent, List<Student> allStudents) {
+        List<String> myInterests = currentStudent.getInterests();
+        return allStudents.stream()
+                .filter(peer -> !peer.equals(currentStudent)) // evitar sugerirse a sí mismo
+                .sorted((a, b) -> {
+                    long commonA = a.getInterests().stream().filter(myInterests::contains).count();
+                    long commonB = b.getInterests().stream().filter(myInterests::contains).count();
+                    return Long.compare(commonB, commonA); // ordenar por mayor número de intereses comunes
+                })
+                .limit(5) // opcional: limitar la cantidad de sugerencias
+                .collect(Collectors.toList());
+    }
 
-        public GraphNode(String id, String label, double size) {
-            this.id = id;
-            this.label = label;
-            this.size = size;
+
+    public void receiveMessage(Message message) {
+        this.messageLinkedList.add(message);
+    }
+
+    public void createStudyGroup(String nameGroup, String description) {
+        StudyGroup studyGroup = new StudyGroup(nameGroup, description);
+        this.studyGroupLinkedList.add(studyGroup);
+    }
+    public void joinStudyGroup(StudyGroup studyGroup) {
+        this.studyGroupLinkedList.add(studyGroup);
+    }
+    public void leaveStudyGroup(StudyGroup studyGroup) {
+        this.studyGroupLinkedList.remove(studyGroup);
+    }
+    public void createHelpRequest(String title,String subject, String description, int priorityLevel) {
+        HelpRequest helpRequest = new HelpRequest(title, subject, description, priorityLevel);
+        this.helpRequestPriorityQueue.add(helpRequest);
+    }
+    public HelpRequest getNextHelpRequest() {
+        if (!helpRequestPriorityQueue.isEmpty()) {
+            return helpRequestPriorityQueue.peek();
         }
-
-        public String getId() { return id; }
-        public String getLabel() { return label; }
-        public double getSize() { return size; }
+        return null; // o lanzar una excepción si se prefiere
     }
-
-    public GraphNode toGraphNode() {
-        return new GraphNode(this.getId(), this.getName(), calculateNodeSize());
+    public void addInterest(String interest) {
+        if (this.interests == null) {
+            this.interests = new ArrayList<>();
+        }
+        this.interests.add(interest);
+    }
+    public void removeInterest(String interest) {
+        if (this.interests != null) {
+            this.interests.remove(interest);
+        }
+    }
+    public List<Content> getContents() {
+        return contents;
+    }
+    public void setContents(List<Content> contents) {
+        this.contents = new ArrayList<>(contents);
+    }
+    public LinkedList<Message> getMessageLinkedList() {
+        return messageLinkedList;
     }
 
     private double calculateNodeSize() {

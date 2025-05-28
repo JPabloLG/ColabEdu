@@ -2,15 +2,21 @@ package co.uniquindio.estructuras.colabedu.Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 
 import co.uniquindio.estructuras.colabedu.App;
+import co.uniquindio.estructuras.colabedu.DAO.UserDAO;
+import co.uniquindio.estructuras.colabedu.DAO.UserDAOImpl;
+import co.uniquindio.estructuras.colabedu.DB.JDBC;
+import co.uniquindio.estructuras.colabedu.DTO.StudentDTO;
+import co.uniquindio.estructuras.colabedu.Model.AcademicSocialNetwork;
+import co.uniquindio.estructuras.colabedu.Model.Student;
 import co.uniquindio.estructuras.colabedu.Util.AlertService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import javax.swing.*;
 
 public class ProfileSettingsController {
 
@@ -38,6 +44,8 @@ public class ProfileSettingsController {
     @FXML
     private TextField txt_username;
 
+    private static final Student currentUser = AcademicSocialNetwork.getSingleton().getCurrentUser();
+
     @FXML
     void btn_back(MouseEvent event) throws IOException {
         App.setRoot("PrincipalView", "ColabEdu -Página principal-");
@@ -48,9 +56,33 @@ public class ProfileSettingsController {
         String password = txt_password.getText();
         String newPassword = txt_newPassword.getText();
         String confirmPassword = txt_confirmPassword.getText();
+        String name = txt_name.getText();
+        String email = txt_email.getText();
+        String username = txt_username.getText();
 
         if (verifyPassword()){
-            //aqui va todo lo de el cambio en la BD como tal
+            // Get database connection
+            Connection connection = JDBC.getConnection();
+            UserDAO userDAO = new UserDAOImpl(connection);
+
+            // Create StudentDTO with updated information
+            StudentDTO updatedUser = new StudentDTO(
+                    name,
+                    email,
+                    currentUser.getId(),
+                    newPassword.isEmpty() ? currentUser.getPassword() : newPassword
+            );
+
+            // Update user in database
+            userDAO.update(updatedUser);
+
+            // Update current user in memory
+            currentUser.setName(name);
+            currentUser.setEmail(email);
+            if (!newPassword.isEmpty()) {
+                currentUser.setPassword(newPassword);
+            }
+
             AlertService.showInfo("Los datos se cambiaron correctamente");
             App.setRoot("PrincipalView", "ColabEdu -Página principal-");
         }
@@ -61,31 +93,25 @@ public class ProfileSettingsController {
         String newPassword = txt_newPassword.getText();
         String confirmPassword = txt_confirmPassword.getText();
 
-        /*
-        if (password == currentUser.getPassword()) {
-
+        if (password.equals(currentUser.getPassword())) {
+            if (newPassword.equals(confirmPassword)) {
+                return true;
+            }else {
+                AlertService.showError("The passwords do not match. Please try again.");
+                return false;
+            }
         }else{
-            AlertService.showError("La contraseña actual está mal digitada");
-            return false;
-        }
-        */
-
-        //esto va adentro del if de arriba
-        if (newPassword.equals(confirmPassword)) {
-            return true;
-        }else {
-            AlertService.showError("Las contraseñas no coinciden");
+            AlertService.showError("The password is incorrect. Please try again.");
             return false;
         }
     }
 
     @FXML
     void initialize() {
-        //txt_email.setText(currentUser.getEmail());
-        //txt_username.setText(currentUser.getUsername());
-        //txt_name.setText(currentUser.getName());
-
-
+        // Set text fields with current user information
+        txt_email.setText(currentUser.getEmail());
+        txt_username.setText(currentUser.getId()); // Using ID as username
+        txt_name.setText(currentUser.getName());
 
         assert txt_confirmPassword != null : "fx:id=\"txt_confirmPassword\" was not injected: check your FXML file 'ProfileSettingsView.fxml'.";
         assert txt_email != null : "fx:id=\"txt_email\" was not injected: check your FXML file 'ProfileSettingsView.fxml'.";

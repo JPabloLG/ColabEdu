@@ -1,5 +1,7 @@
 package co.uniquindio.estructuras.colabedu.DAO;
 
+import java.time.LocalDateTime;
+
 public class ContentDTO {
     private int id;
     private String title;
@@ -7,14 +9,18 @@ public class ContentDTO {
     private String contentType;
     private String contentUrl;
     private int userId;
+    private LocalDateTime publicationDate;
+    private String subject;
 
-    public ContentDTO(int id, String title, String description, String contentType, String contentUrl, int userId) {
+    public ContentDTO(int id, String title, String description, String contentType, String contentUrl, int userId, LocalDateTime publicationDate, String subject) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.contentType = contentType;
         this.contentUrl = contentUrl;
         this.userId = userId;
+        this.publicationDate = publicationDate;
+        this.subject = subject;
     }
 
     public int getId() {
@@ -63,5 +69,21 @@ public class ContentDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

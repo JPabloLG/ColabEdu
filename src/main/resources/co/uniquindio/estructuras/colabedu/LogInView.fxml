@@ -13,7 +13,7 @@
         <TextField fx:id="txt_username" layoutX="230.0" layoutY="247.0" prefHeight="35.0" prefWidth="296.0" promptText="Email" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
         <PasswordField fx:id="txt_password" layoutX="232.0" layoutY="313.0" prefHeight="35.0" prefWidth="296.0" promptText="Password" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />
         <Button layoutX="344.0" layoutY="403.0" mnemonicParsing="false" onMousePressed="#btn_logIn" prefHeight="25.0" prefWidth="72.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Log In" textFill="WHITE" />
-      <Button layoutX="346.0" layoutY="357.0" mnemonicParsing="false" onMousePressed="#btn_Password" prefHeight="27.0" prefWidth="181.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Did you forget the password?" textFill="WHITE" />
-      <Button layoutX="229.0" layoutY="357.0" mnemonicParsing="false" onMousePressed="#btn_Account" prefHeight="27.0" prefWidth="102.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Create Account" textFill="WHITE" />
+        <Button layoutX="346.0" layoutY="357.0" mnemonicParsing="false" onMousePressed="#btn_Password" prefHeight="27.0" prefWidth="181.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Did you forget the password?" textFill="WHITE" />
+        <Button layoutX="229.0" layoutY="357.0" mnemonicParsing="false" onMousePressed="#btn_Account" prefHeight="27.0" prefWidth="102.0" style="-fx-background-color: #2c3e50; -fx-border-color: #2c3e50; -fx-border-radius: 10; -fx-background-radius: 10;" text="Create Account" textFill="WHITE" />
     </children>
 </AnchorPane>

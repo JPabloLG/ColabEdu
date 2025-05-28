@@ -8,8 +8,8 @@ public class DataInitializer {
 
     public static void initializeSampleData() {
         // Crear estudiantes
-        Student s1 = new Student("Ana López", "ana@email.com", "001", "pass123", "Instituto Central");
-        Student s2 = new Student("Carlos Ruiz", "carlos@email.com", "002", "pass123", "Instituto Central");
+        Student s1 = new Student("Ana López", "ana@email.com", "001", "pass123");
+        Student s2 = new Student("Carlos Ruiz", "carlos@email.com", "002", "pass123");
 
         // Añadir al manager
         FriendshipManager manager = FriendshipManager.getInstance();

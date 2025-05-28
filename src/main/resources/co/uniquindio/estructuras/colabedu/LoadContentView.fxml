@@ -18,6 +18,20 @@
       <Label style="-fx-font-weight: bold;" text="Título del Contenido:" />
       <TextField fx:id="txt_title" promptText="Ingrese el título" style="-fx-pref-width: 400;" />
 
+      <!-- Asignatura (ComboBox) -->
+      <Label style="-fx-font-weight: bold;" text="Asignatura:" />
+      <ComboBox fx:id="cb_subject" style="-fx-pref-width: 400;">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Matemáticas" />
+               <String fx:value="Inglés" />
+               <String fx:value="Historia" />
+               <String fx:value="Ciencias Naturales" />
+               <String fx:value="Contenidos curiosos" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+
       <!-- Tema -->
       <Label style="-fx-font-weight: bold;" text="Tema:" />
       <TextField fx:id="txt_topic" promptText="Ingrese el tema" style="-fx-pref-width: 400;" />

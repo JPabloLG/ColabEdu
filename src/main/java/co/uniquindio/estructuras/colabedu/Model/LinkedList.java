@@ -120,4 +120,3 @@ public class LinkedList<T> {
         return false; // Element not found
     }
 }
-
