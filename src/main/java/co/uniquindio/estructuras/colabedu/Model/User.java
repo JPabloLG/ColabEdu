@@ -1,11 +1,16 @@
 package co.uniquindio.estructuras.colabedu.Model;
 
+
 public abstract class User {
+
     protected String name;
     protected String email;
     protected String id;
     private String password;
 
+    public String getName() {
+        return name;
+    }
 
     public String getName() {
         return name;
@@ -63,3 +68,4 @@ public abstract class User {
     public abstract void deleteContent(Content content);
     public abstract void publishContent(Content content);
 }
+
