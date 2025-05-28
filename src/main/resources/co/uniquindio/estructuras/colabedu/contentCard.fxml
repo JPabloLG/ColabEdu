@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #90cbfb;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.estructuras.colabedu.Controller.ContentCardController">
+    <children>
+        <!-- Información del usuario y contenido -->
+        <Text fx:id="txt_username" layoutX="18.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario" wrappingWidth="101.3203125">
+            <font>
+                <Font name="Berlin Sans FB" size="14.0" />
+            </font>
+        </Text>
+
+        <Text fx:id="txt_nameContent" layoutX="126.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dsads" textAlignment="CENTER" wrappingWidth="205.0">
+            <font>
+                <Font name="Berlin Sans FB" size="14.0" />
+            </font>
+        </Text>
+
+        <!-- Contenedor multimedia mejorado -->
+        <StackPane fx:id="mediaContainer" layoutX="333.0" layoutY="21.0" prefHeight="137.0" prefWidth="152.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-radius: 5;">
+            <children>
+                <ImageView fx:id="imgPreview" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" visible="false" />
+                <ImageView fx:id="iconType" fitHeight="50" fitWidth="50" visible="false" />
+                <Label fx:id="lblFileInfo" visible="false" wrapText="true" />
+            </children>
+        </StackPane>
+
+        <!-- Descripción -->
+        <Label fx:id="txt_description" layoutX="18.0" layoutY="53.0" prefHeight="87.0" prefWidth="285.0" text="Descripción" textAlignment="JUSTIFY" wrapText="true">
+            <font>
+                <Font name="Berlin Sans FB Bold" size="12.0" />
+            </font>
+        </Label>
+
+        <!-- Rating y fecha -->
+        <Text fx:id="txt_rating" layoutX="44.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+            <font>
+                <Font name="Berlin Sans FB" size="14.0" />
+            </font>
+        </Text>
+
+        <ImageView fitHeight="26.0" fitWidth="21.0" layoutX="18.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/star.png" />
+            </image>
+        </ImageView>
+
+        <Text fx:id="txt_typeContent" layoutX="222.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo" textAlignment="RIGHT" wrappingWidth="187.3203125">
+            <font>
+                <Font name="Berlin Sans FB" size="14.0" />
+            </font>
+        </Text>
+
+        <Text fx:id="txt_date" layoutX="429.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00-00-0000" textAlignment="RIGHT">
+            <font>
+                <Font name="Berlin Sans FB Bold" size="11.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>

@@ -1,15 +1,19 @@
-package co.uniquindio.estructuras.colabedu.Model;
+package co.uniquindio.estructuras.colabedu.DTO;
 
-
-public abstract class User {
-
-    protected String name;
-    protected String email;
-    protected String id;
+public class StudentDTO {
+    private String name;
+    private String email;
+    private String id;
     private String password;
 
-    public String getName() {
-        return name;
+    public StudentDTO() {
+    }
+
+    public StudentDTO(String name, String email, String id, String password) {
+        this.name = name;
+        this.email = email;
+        this.id = id;
+        this.password = password;
     }
 
     public String getName() {
@@ -44,28 +48,13 @@ public abstract class User {
         this.password = password;
     }
 
-    public User() {
-    }
-
-    public User(String name, String email, String id, String password) {
-        this.name = name;
-        this.email = email;
-        this.id = id;
-        this.password = password;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
-
-    public abstract void updateContent(Content content);
-    public abstract void deleteContent(Content content);
-    public abstract void publishContent(Content content);
 }
-

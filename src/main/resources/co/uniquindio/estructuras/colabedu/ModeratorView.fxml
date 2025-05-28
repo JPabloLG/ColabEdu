@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane layoutY="-2.0" prefHeight="606.0" prefWidth="246.0" style="-fx-background-color: #152B44;">
+            <children>
+                <Pane layoutY="2.0" prefHeight="102.0" prefWidth="1000.0" style="-fx-background-color: #0D1C2E;">
+                    <children>
+                        <Pane layoutX="43.0" layoutY="28.0" onMousePressed="#btn_colabEdu" prefHeight="38.0" prefWidth="157.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-background-color: #1d2934; -fx-border-radius: 10;" />
+                        <PasswordField layoutX="426.0" layoutY="34.0" prefHeight="25.0" prefWidth="157.0" promptText="Search" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #1d2934; -fx-background-color: #a5c6e7;" />
+                    </children>
+                </Pane>
+                <Pane layoutX="23.0" layoutY="123.0" prefHeight="442.0" prefWidth="200.0" style="-fx-background-color: #1d2934;">
+                    <children>
+                        <Button fx:id="btnUsuariosM" layoutX="65.0" layoutY="94.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #a5c6e7; -fx-border-color: #1d2934;" text="Usuarios" />
+                        <Button fx:id="btnContenidoM" layoutX="64.0" layoutY="196.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #a5c6e7; -fx-border-color: #1d2934;" text="Contenido" />
+                        <Button fx:id="btnGruposM" layoutX="64.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #a5c6e7; -fx-border-color: #1d2934;" text="Grupos" />
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

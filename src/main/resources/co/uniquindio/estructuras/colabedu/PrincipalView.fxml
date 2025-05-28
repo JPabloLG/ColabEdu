@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.uniquindio.estructuras.colabedu.Controller.PrincipalController">
+
+   <children>
+      <!-- Fondo principal -->
+      <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/bg_Principal.png" />
+         </image>
+      </ImageView>
+
+      <!-- Overlay (nuevo) -->
+      <Pane fx:id="overlay" onMouseClicked="#closeProfileSidebar" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: rgba(0,0,0,0.3);" visible="false" />
+
+      <!-- Tus elementos originales (conservados) -->
+      <TextField fx:id="txt_search" layoutX="324.0" layoutY="26.0" prefHeight="27.0" prefWidth="207.0" promptText="Search" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #a5c6e7;" />
+
+      <!-- Botones originales (sin modificaciones) -->
+      <Pane layoutX="57.0" layoutY="26.0" onMousePressed="#btn_colabEdu" prefHeight="27.0" prefWidth="145.0" />
+      <Pane layoutX="71.0" layoutY="219.0" onMousePressed="#btn_contenidos" prefHeight="15.0" prefWidth="115.0" />
+      <Pane layoutX="65.0" layoutY="283.0" onMousePressed="#btn_valoraciones" prefHeight="15.0" prefWidth="127.0" />
+      <Pane layoutX="72.0" layoutY="347.0" onMousePressed="#btn_soliAyuda" prefHeight="15.0" prefWidth="115.0" />
+      <Pane layoutX="52.0" layoutY="414.0" onMousePressed="#btn_solicitudesAyuda" prefHeight="15.0" prefWidth="154.0" />
+      <Pane layoutX="648.0" layoutY="32.0" onMousePressed="#btn_principal" prefHeight="15.0" prefWidth="68.0" />
+      <Pane layoutX="758.0" layoutY="32.0" onMousePressed="#btn_grupos" prefHeight="15.0" prefWidth="55.0" />
+      <Pane layoutX="847.0" layoutY="32.0" onMousePressed="#btn_perfil" prefHeight="15.0" prefWidth="98.0" />
+      <Pane layoutX="104.0" layoutY="125.0" onMousePressed="#btn_crear" prefHeight="15.0" prefWidth="55.0" />
+
+      <ScrollPane fx:id="content_container" layoutX="253.0" layoutY="78.0" prefHeight="523.0" prefWidth="748.0">
+         <content>
+            <VBox fx:id="contenedorContenidos" alignment="TOP_CENTER" prefHeight="522.0" prefWidth="726.0" spacing="10" />
+         </content>
+      </ScrollPane>
+
+      <!-- Barra lateral del perfil (nuevo) -->
+      <AnchorPane fx:id="profileSidebar" layoutX="700.0" layoutY="0.0" prefHeight="213.0" prefWidth="300.0" style="-fx-background-color: #f5f5f5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0); -fx-background-radius: 15;" visible="false">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="41.0" prefHeight="173.0" prefWidth="261.0" spacing="20">
+               <Text style="-fx-font-size: 24; -fx-font-weight: bold; -fx-fill: #1d2934;" text="Mi Perfil" textAlignment="RIGHT" />
+               <Button onAction="#handleConfiguracion" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50; -fx-font-size: 16;" text="Configuración" />
+               <Button onAction="#handleCerrarSesion" style="-fx-background-color: transparent; -fx-text-fill: #e74c3c; -fx-font-size: 16;" text="Cerrar sesión" />
+            </VBox>
+            <Button layoutX="260.0" onAction="#closeProfileSidebar" prefHeight="46.0" prefWidth="37.0" style="-fx-background-color: transparent;">
+               <text>X</text>
+               <font>
+                  <Font name="Bauhaus 93" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Label layoutX="281.0" layoutY="22.0" onMouseClicked="#btnSearch" prefHeight="32.0" prefWidth="27.0" />
+   </children>
+</AnchorPane>
