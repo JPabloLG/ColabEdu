@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -7,7 +6,7 @@
     <children>
         <ImageView fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/bg_LogIn.png" />
+               <Image url="@images/lock.png" />
             </image>
         </ImageView>
         <TextField fx:id="txt_username" layoutX="230.0" layoutY="247.0" prefHeight="35.0" prefWidth="296.0" promptText="Email" style="-fx-border-color: #1d2934; -fx-border-radius: 10; -fx-background-radius: 10;" />

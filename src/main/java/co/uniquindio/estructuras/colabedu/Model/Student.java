@@ -6,7 +6,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Student extends User {
@@ -15,6 +17,8 @@ public class Student extends User {
     private LinkedList<Message> messageLinkedList;
     private LinkedList<StudyGroup> studyGroupLinkedList;
     private PriorityQueue<HelpRequest> helpRequestPriorityQueue;
+    private ArrayList<Content> contents;
+    private List<String> interests;
     private ArrayList<Student> friends;
     private LinkedList<Content> contentBinarySearchTree;
 
@@ -109,6 +113,18 @@ public class Student extends User {
         this.instituto = instituto;
     }
 
+    public List<String> getInterests() { return interests; }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "instituto='" + instituto + '\'' +
+                ", messageLinkedList=" + messageLinkedList +
+                ", studyGroupLinkedList=" + studyGroupLinkedList +
+                ", helpRequestPriorityQueue=" + helpRequestPriorityQueue +
+                '}';
+    }
+
     public LinkedList<StudyGroup> getStudyGroupLinkedList() {
         return studyGroupLinkedList;
     }
@@ -121,7 +137,7 @@ public class Student extends User {
     /*
     @Override
     public void updateContent(Content content) {
-        for (Content i:contentBinarySearchTree) {
+        for (Content i:contents) {
             if(i.equals(content)){
                 i.setName(content.getName());
                 i.setDescription(content.getDescription());
@@ -136,12 +152,12 @@ public class Student extends User {
 
     @Override
     public void deleteContent(Content content) {
-        contentBinarySearchTree.remove(content);
+        contents.remove(content);
     }
 
     @Override
     public void publishContent(Content content) {
-        contentBinarySearchTree.add(content);
+        contents.add(content);
     }
 
     @Override
@@ -154,15 +170,18 @@ public class Student extends User {
                 '}';
     }
     public void createContent(String name, LocalDateTime publicationDate, String typeContent,
-                              String description, String subject, ArrayList<Rating> theRating){
-        //Content content = new Content(name, publicationDate, typeContent, description, subject, this, theRating);
-        //contentBinarySearchTree.add(content);
+                              String description, String subject, Rating theRating){
+        Content content = new Content(name,publicationDate, typeContent, description, subject, this, theRating);
+        contents.add(content);
     }
 
-    public void requestHelp(){}
+
     public List<Content> searchContent(String keyword) {
-        //return contentBinarySearchTree.search(keyword);
-        return  null;
+        return contents.stream()
+                .filter(content -> content.getName().toLowerCase().contains(keyword.toLowerCase()) ||
+                        content.getDescription().toLowerCase().contains(keyword.toLowerCase()) ||
+                        content.getSubject().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     // Clase interna para el grafo
@@ -176,6 +195,20 @@ public class Student extends User {
             this.label = label;
             this.size = size;
         }
+    }
+            // Ver sugerencias de compañeros con intereses similares
+    public List<Student> getSuggestedPeers (Student currentStudent, List<Student> allStudents) {
+        List<String> myInterests = currentStudent.getInterests();
+        return allStudents.stream()
+                .filter(peer -> !peer.equals(currentStudent)) // evitar sugerirse a sí mismo
+                .sorted((a, b) -> {
+                    long commonA = a.getInterests().stream().filter(myInterests::contains).count();
+                    long commonB = b.getInterests().stream().filter(myInterests::contains).count();
+                    return Long.compare(commonB, commonA); // ordenar por mayor número de intereses comunes
+                })
+                .limit(5) // opcional: limitar la cantidad de sugerencias
+                .collect(Collectors.toList());
+    }
 
         public String getId() { return id; }
         public String getLabel() { return label; }
@@ -184,6 +217,51 @@ public class Student extends User {
 
     public GraphNode toGraphNode() {
         return new GraphNode(this.getId(), this.getName(), calculateNodeSize());
+    }
+
+    public void receiveMessage(Message message) {
+        this.messageLinkedList.add(message);
+    }
+
+    public void createStudyGroup(String nameGroup, String description) {
+        StudyGroup studyGroup = new StudyGroup(nameGroup, description);
+        this.studyGroupLinkedList.add(studyGroup);
+    }
+    public void joinStudyGroup(StudyGroup studyGroup) {
+        this.studyGroupLinkedList.add(studyGroup);
+    }
+    public void leaveStudyGroup(StudyGroup studyGroup) {
+        this.studyGroupLinkedList.remove(studyGroup);
+    }
+    public void createHelpRequest(String title, String description) {
+        HelpRequest helpRequest = new HelpRequest(title, description, this);
+        this.helpRequestPriorityQueue.enqueue(helpRequest);
+    }
+    public HelpRequest getNextHelpRequest() {
+        if (!helpRequestPriorityQueue.isEmpty()) {
+            return helpRequestPriorityQueue.dequeue();
+        }
+        return null; // o lanzar una excepción si se prefiere
+    }
+    public void addInterest(String interest) {
+        if (this.interests == null) {
+            this.interests = new ArrayList<>();
+        }
+        this.interests.add(interest);
+    }
+    public void removeInterest(String interest) {
+        if (this.interests != null) {
+            this.interests.remove(interest);
+        }
+    }
+    public List<Content> getContents() {
+        return contents;
+    }
+    public void setContents(List<Content> contents) {
+        this.contents = new ArrayList<>(contents);
+    }
+    public LinkedList<Message> getMessageLinkedList() {
+        return messageLinkedList;
     }
 
     private double calculateNodeSize() {
